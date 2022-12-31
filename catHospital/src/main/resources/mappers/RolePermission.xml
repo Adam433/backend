@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.RolePermissionMapper">
+
+    <resultMap id="PermissionJoinPermissionColumn" type="com.renkaen.cat_hospital.bean.DTO.PermissionJoinPermissionColumnDTO" autoMapping="true">
+        <association property="permissionColumn" autoMapping="true">
+        </association>
+    </resultMap>
+    <select id="selectPermissionByRolesId" resultMap="PermissionJoinPermissionColumn">
+        select *
+        from role_permission rp left join permission_table pt on rp.permissionId = pt.permissionId
+        left join permission_column pc on pt.permissionColumnId = pc.permissionColumnId
+        where rp.rolesId = #{rolesId}
+    </select>
+
+</mapper>

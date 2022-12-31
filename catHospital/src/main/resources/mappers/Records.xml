@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.RecordsMapper">
+    <resultMap id="RecordJoinCat" type="com.renkaen.cat_hospital.bean.DTO.RecordsJoinCatsDTO" autoMapping="true">
+        <association property="cats" javaType="com.renkaen.cat_hospital.bean.PO.Cats" autoMapping="true" >
+        </association>
+    </resultMap>
+    <!--通过bill查询record+cat-->
+    <select id="selectRecordJoinCat" resultMap="RecordJoinCat">
+        select *
+        from (select * from records_table where bill=#{bill}) records
+            left join cats_table cats on records.catId = cats.id
+    </select>
+    <!--助理的待办事项：bill查询recard+cat-->
+    <select id="selectRecordJoinCatByAssistant" resultMap="RecordJoinCat">
+        select *
+        from  records_table  record left join cats_table cats on record.catId = cats.id
+        where (record.bill =1 or record.bill = 0) and record.reserve = 1;
+    </select>
+    <!--医生的待办事项：bill查询recard+cat-->
+    <select id="selectRecordJoinCatByStaffId" resultMap="RecordJoinCat">
+        select *
+        from  records_table  record left join cats_table cats on record.catId = cats.id
+        where record.staffId = #{staffId} and record.reserve = 0;
+    </select>
+    <!--两个时间点之间某个staffId的所有records-->
+    <select id="selectRecordByTimeAndStaffId" resultType="com.renkaen.cat_hospital.bean.PO.Records">
+        select *
+        from records_table
+        where keyTime &gt;= #{timeStart} and keyTime &lt;= #{timeEnd} and staffId = #{staffId}
+    </select>
+    <!--超过某个时间点的所有预约记录-->
+    <select id="selectRecordsByTime" resultMap="RecordJoinCat">
+        select *
+        from (select * from records_table where keyTime &gt;= #{timeStart}) records
+                 left join cats_table cats on records.catId = cats.id
+    </select>
+    <!--根据权限id获取权限信息-->
+    <select id="selectUserById" resultType="com.renkaen.cat_hospital.bean.PO.Records">
+        select *
+        from records_table
+        where id = #{id};
+    </select>
+
+    <!--新增病历记录-->
+    <insert id="insertRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into records_table (id, catId, keyTime, staffId, weight, treatments,diagnosis, reserve,bill,billList )
+        values (default, #{catId}, #{keyTime}, #{staffId}, #{weight}, #{treatments},#{diagnosis},#{reserve},#{bill},#{billList})
+    </insert>
+
+    <!-- 根据id更新病历记录 -->
+    <update id="updateRecordsById" parameterType="com.renkaen.cat_hospital.bean.PO.Records">
+        update records_table
+        set catId = ifnull( #{records.catId},catId ),
+            staffId = ifnull( #{records.staffId} , staffId ),
+            keyTime = ifnull( #{records.keyTime} , keyTime ),
+            weight = ifnull( #{records.weight} , weight ),
+            treatments = ifnull( #{records.treatments} , treatments ),
+            diagnosis = ifnull( #{records.diagnosis} , diagnosis ),
+            reserve = ifnull( #{records.reserve} , reserve ),
+            bill = ifnull( #{records.bill} , bill ),
+            billList = ifnull( #{records.billList} , billList )
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRecordsById">
+        delete
+        from records_table
+        where id = #{id}
+    </delete>
+
+
+</mapper>

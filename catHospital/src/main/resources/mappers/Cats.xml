@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.CatsMapper">
+
+    <!--根据phoneNumber || phoneNumber and nickname获取权限信息-->
+    <select id="selectCatByPhone" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+        select *
+        from cats_table
+        where phoneNumber = #{phoneNumber}
+    </select>
+    <select id="selectCatByPhoneNick" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+        select *
+        from cats_table
+        where phoneNumber = #{phoneNumber} and nickname = #{nickname}
+    </select>
+    <select id="selectAllCats" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+        select *
+        from cats_table
+    </select>
+
+    <insert id="insertCats"  useGeneratedKeys="true" keyProperty="id">
+        insert into cats_table (  id,nickname,catOwner,phoneNumber,birthday,keyTime,vaccine,vermifuge,sex,sterilize)
+        values (default, #{nickname}, #{catOwner}, #{phoneNumber}, #{birthday}, #{keyTime},#{vaccine},#{vermifuge},#{sex},#{sterilize})
+    </insert>
+    <update id="updateCatsById" parameterType="com.renkaen.cat_hospital.bean.PO.Cats">
+        update cats_table
+        set nickname = ifnull( #{cats.nickname} , nickname ),
+            catOwner = ifnull( #{cats.catOwner} , catOwner ),
+            phoneNumber = ifnull( #{cats.phoneNumber} , phoneNumber ),
+            birthday = ifnull( #{cats.birthday} , birthday ),
+            keyTime = ifnull( #{cats.keyTime} , keyTime ),
+            vaccine = ifnull( #{cats.vaccine} , vaccine ),
+            vermifuge = ifnull( #{cats.vermifuge} , vermifuge ),
+            sex = ifnull( #{cats.sex} , sex ),
+            sterilize = ifnull( #{cats.sterilize} , sterilize )
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCatsById">
+        delete
+        from cats_table
+        where id = #{id}
+    </delete>
+</mapper>
