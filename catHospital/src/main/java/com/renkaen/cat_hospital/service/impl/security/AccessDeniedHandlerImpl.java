@@ -12,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//无权限的时候的处理
+//访问接口没有权限时,调用该方法
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override

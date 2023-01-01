@@ -4,13 +4,10 @@ package com.renkaen.cat_hospital.controller;
 import com.renkaen.cat_hospital.bean.PO.Staff;
 import com.renkaen.cat_hospital.bean.VO.StaffJoinRightsVO;
 import com.renkaen.cat_hospital.bean.VO.StaffVO;
-import com.renkaen.cat_hospital.domain.ResponseResult;
-import com.renkaen.cat_hospital.service.LogService;
 import com.renkaen.cat_hospital.service.StaffService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +17,8 @@ import java.util.List;
 public class StaffController {
     @Autowired
     private StaffService staffService;
-    @Autowired
-    private LogService logService;
-    @PreAuthorize("hasAnyAuthority('test3')")
+
+//    @PreAuthorize("hasAnyAuthority('test3')")
     @GetMapping("/{staffId}")
     public StaffVO getStaffById(@PathVariable("staffId") int id){
         return  staffService.getById(id);
@@ -45,15 +41,7 @@ public class StaffController {
     public StaffJoinRightsVO getStaffByIdJoinRights(@PathVariable("staffId")int staffId){
         return staffService.getStaffByIdJoinRights(staffId);
     }
-    //登陆和登出
-    @PostMapping("/login")
-    public ResponseResult getStaffJoinRightsByPassword(@RequestBody Staff staff ){
-        return logService.login(staff);
-    }
-    @RequestMapping("/logout")
-    public ResponseResult logout(){
-        return logService.logout();
-    }
+
     //--------------------------------------------------------------update\delete\add
     @PostMapping("")
     public Object createUser(@RequestBody StaffVO staffVO) {
