@@ -5,17 +5,17 @@
 <mapper namespace="com.renkaen.cat_hospital.mapper.CatsMapper">
 
     <!--根据phoneNumber || phoneNumber and nickname获取权限信息-->
-    <select id="selectCatByPhone" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+    <select id="selectCatByPhone" resultType="com.renkaen.cat_hospital.bean.DO.Cats">
         select *
         from cats_table
         where phoneNumber = #{phoneNumber}
     </select>
-    <select id="selectCatByPhoneNick" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+    <select id="selectCatByPhoneNick" resultType="com.renkaen.cat_hospital.bean.DO.Cats">
         select *
         from cats_table
         where phoneNumber = #{phoneNumber} and nickname = #{nickname}
     </select>
-    <select id="selectAllCats" resultType="com.renkaen.cat_hospital.bean.PO.Cats">
+    <select id="selectAllCats" resultType="com.renkaen.cat_hospital.bean.DO.Cats">
         select *
         from cats_table
     </select>
@@ -24,7 +24,7 @@
         insert into cats_table (  id,nickname,catOwner,phoneNumber,birthday,keyTime,vaccine,vermifuge,sex,sterilize)
         values (default, #{nickname}, #{catOwner}, #{phoneNumber}, #{birthday}, #{keyTime},#{vaccine},#{vermifuge},#{sex},#{sterilize})
     </insert>
-    <update id="updateCatsById" parameterType="com.renkaen.cat_hospital.bean.PO.Cats">
+    <update id="updateCatsById" parameterType="com.renkaen.cat_hospital.bean.DO.Cats">
         update cats_table
         set nickname = ifnull( #{cats.nickname} , nickname ),
             catOwner = ifnull( #{cats.catOwner} , catOwner ),

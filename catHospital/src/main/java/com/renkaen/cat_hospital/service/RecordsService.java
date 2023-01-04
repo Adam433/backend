@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.service;
 
-import com.renkaen.cat_hospital.bean.PO.Records;
+import com.renkaen.cat_hospital.bean.DO.Records;
 import com.renkaen.cat_hospital.bean.VO.RecordsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsJoinCatsVO;
 

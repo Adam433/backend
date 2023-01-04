@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.service.impl;
 
-import com.renkaen.cat_hospital.bean.PO.Rights;
+import com.renkaen.cat_hospital.bean.DO.Rights;
 import com.renkaen.cat_hospital.mapper.RightsMapper;
 import com.renkaen.cat_hospital.service.RightsService;
 import org.springframework.beans.factory.annotation.Autowired;

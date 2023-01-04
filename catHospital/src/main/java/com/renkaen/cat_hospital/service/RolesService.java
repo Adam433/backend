@@ -1,7 +1,6 @@
 package com.renkaen.cat_hospital.service;
 
-import com.renkaen.cat_hospital.bean.DTO.RolesJoinRightsDTO;
-import com.renkaen.cat_hospital.bean.PO.Roles;
+import com.renkaen.cat_hospital.bean.DO.Roles;
 import com.renkaen.cat_hospital.bean.VO.RolesJoinRightsVO;
 
 import java.util.List;

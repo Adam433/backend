@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.controller;
 
-import com.renkaen.cat_hospital.bean.PO.Rights;
+import com.renkaen.cat_hospital.bean.DO.Rights;
 import com.renkaen.cat_hospital.bean.VO.RightsVO;
 import com.renkaen.cat_hospital.service.impl.RightServiceImpl;
 import org.apache.commons.lang.StringUtils;

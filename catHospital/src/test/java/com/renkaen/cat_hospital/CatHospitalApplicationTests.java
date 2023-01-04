@@ -28,14 +28,13 @@ class CatHospitalApplicationTests {
     @Autowired
     private StaffController staffController;
     @Autowired
-    private RolePermissionServiceImpl rolePermissionService;
+    private PermissionServiceImpl rolePermissionService;
     @Test
     void testPassword(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         System.out.println(bCryptPasswordEncoder.encode("Qwer4321"));
     }
-    @Test
-    void RPService() { System.out.println(rolePermissionService.getPermissionByRolesId(1)); };
+
     @Test
     void controller() {
         System.out.println(staffController.getStaffById(1));

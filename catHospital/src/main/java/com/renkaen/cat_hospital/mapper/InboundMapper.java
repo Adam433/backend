@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.mapper;
 
-import com.renkaen.cat_hospital.bean.PO.Inbound;
+import com.renkaen.cat_hospital.bean.DO.Inbound;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

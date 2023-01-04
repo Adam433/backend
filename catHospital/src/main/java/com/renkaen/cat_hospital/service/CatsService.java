@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.service;
 
-import com.renkaen.cat_hospital.bean.PO.Cats;
+import com.renkaen.cat_hospital.bean.DO.Cats;
 import com.renkaen.cat_hospital.bean.VO.CatsVO;
 
 import java.util.List;

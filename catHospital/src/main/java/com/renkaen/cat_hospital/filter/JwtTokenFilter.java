@@ -1,7 +1,7 @@
 package com.renkaen.cat_hospital.filter;
 
 
-import com.renkaen.cat_hospital.bean.PO.StaffToken;
+import com.renkaen.cat_hospital.bean.DO.StaffToken;
 import com.renkaen.cat_hospital.utils.JwtUtil;
 import com.renkaen.cat_hospital.utils.RedisUtil;
 import io.jsonwebtoken.Claims;

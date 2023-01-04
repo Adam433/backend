@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.bean.VO;
 
-import com.renkaen.cat_hospital.bean.PO.Roles;
+import com.renkaen.cat_hospital.bean.DO.Roles;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +11,10 @@ public class RolesVO {
         id = roles.getId();
         katagaki = roles.getKatagaki();
         key = roles.getKeyTime();
+        roleName = roles.getRoleName();
     }
     private Integer id;
     private String katagaki;
     private Integer key;
+    private String roleName;
 }

@@ -1,7 +1,7 @@
 package com.renkaen.cat_hospital.mapper;
 
 import com.renkaen.cat_hospital.bean.DTO.StaffJoinRightsDTO;
-import com.renkaen.cat_hospital.bean.PO.Staff;
+import com.renkaen.cat_hospital.bean.DO.Staff;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

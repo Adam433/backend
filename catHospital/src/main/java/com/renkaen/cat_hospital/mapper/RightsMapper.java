@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.mapper;
 
-import com.renkaen.cat_hospital.bean.PO.Rights;
+import com.renkaen.cat_hospital.bean.DO.Rights;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

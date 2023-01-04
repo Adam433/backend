@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.bean.VO;
 
-import com.renkaen.cat_hospital.bean.PO.Staff;
+import com.renkaen.cat_hospital.bean.DO.Staff;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,7 @@
 package com.renkaen.cat_hospital.mapper;
 
 import com.renkaen.cat_hospital.bean.DTO.RecordsJoinCatsDTO;
-import com.renkaen.cat_hospital.bean.PO.Records;
+import com.renkaen.cat_hospital.bean.DO.Records;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

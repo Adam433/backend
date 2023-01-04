@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.controller;
 
-import com.renkaen.cat_hospital.bean.PO.Inbound;
+import com.renkaen.cat_hospital.bean.DO.Inbound;
 import com.renkaen.cat_hospital.bean.VO.InboundVO;
 import com.renkaen.cat_hospital.service.impl.InBoundServiceImpl;
 import org.apache.commons.lang.StringUtils;

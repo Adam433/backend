@@ -1,7 +1,7 @@
 package com.renkaen.cat_hospital.controller;
 
 
-import com.renkaen.cat_hospital.bean.PO.Staff;
+import com.renkaen.cat_hospital.bean.DO.Staff;
 import com.renkaen.cat_hospital.bean.VO.StaffJoinRightsVO;
 import com.renkaen.cat_hospital.bean.VO.StaffVO;
 import com.renkaen.cat_hospital.service.StaffService;

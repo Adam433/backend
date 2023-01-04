@@ -1,4 +1,4 @@
-package com.renkaen.cat_hospital.bean.PO;
+package com.renkaen.cat_hospital.bean.DO;
 
 import lombok.Data;
 

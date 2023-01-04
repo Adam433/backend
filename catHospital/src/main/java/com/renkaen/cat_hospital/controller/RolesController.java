@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.controller;
 
-import com.renkaen.cat_hospital.bean.PO.Roles;
+import com.renkaen.cat_hospital.bean.DO.Roles;
 import com.renkaen.cat_hospital.bean.VO.RolesJoinRightsVO;
 import com.renkaen.cat_hospital.bean.VO.RolesVO;
 import com.renkaen.cat_hospital.service.impl.RolesServiceImpl;

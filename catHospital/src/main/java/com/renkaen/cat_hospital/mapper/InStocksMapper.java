@@ -1,8 +1,7 @@
 package com.renkaen.cat_hospital.mapper;
 
 import com.renkaen.cat_hospital.bean.DTO.InStocksJoinInboundDTO;
-import com.renkaen.cat_hospital.bean.PO.InStocks;
-import com.renkaen.cat_hospital.bean.VO.InStocksJoinInboundVO;
+import com.renkaen.cat_hospital.bean.DO.InStocks;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.bean.DTO;
 
-import com.renkaen.cat_hospital.bean.PO.Cats;
+import com.renkaen.cat_hospital.bean.DO.Cats;
 import lombok.Data;
 
 @Data

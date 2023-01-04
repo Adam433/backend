@@ -1,7 +1,6 @@
 package com.renkaen.cat_hospital.bean.DTO;
 
-import com.renkaen.cat_hospital.bean.PO.Inbound;
-import com.renkaen.cat_hospital.bean.VO.InboundVO;
+import com.renkaen.cat_hospital.bean.DO.Inbound;
 import lombok.Data;
 
 import java.util.List;

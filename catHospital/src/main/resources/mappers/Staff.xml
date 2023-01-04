@@ -4,26 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.renkaen.cat_hospital.mapper.StaffMapper">
     <resultMap id="staffJoinRights" type="com.renkaen.cat_hospital.bean.DTO.StaffJoinRightsDTO" autoMapping="true">
-        <association property="rights" javaType="com.renkaen.cat_hospital.bean.PO.Rights" autoMapping="true"/>
+        <association property="rights" javaType="com.renkaen.cat_hospital.bean.DO.Rights" autoMapping="true"/>
     </resultMap>
     <!--根据权限id获取权限信息-->
-    <select id="selectUserById" resultType="com.renkaen.cat_hospital.bean.PO.Staff">
+    <select id="selectUserById" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
         select *
         from staff_table
         where id = #{id};
     </select>
-    <select id="selectAllUser" resultType="com.renkaen.cat_hospital.bean.PO.Staff">
+    <select id="selectAllUser" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
         select *
         from staff_table
     </select>
 
     <!--查询用户名是否被占用-->
-    <select id="selectStaffByName" resultType="com.renkaen.cat_hospital.bean.PO.Staff">
+    <select id="selectStaffByName" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
         select * from staff_table where username = #{username}
     </select>
 
     <!--获取所有医生-->
-    <select id="selectUserByRole" resultType="com.renkaen.cat_hospital.bean.PO.Staff">
+    <select id="selectUserByRole" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
         select *
         from staff_table
         where rolesId = #{id_1} or rolesId = #{id_2};
@@ -35,7 +35,7 @@
         on staff.rightsId = rights.id
     </select>
     <!--根据username, password获得staff join rights-->
-    <select id="selectStaffByPassword" resultType="com.renkaen.cat_hospital.bean.PO.Staff" >
+    <select id="selectStaffByPassword" resultType="com.renkaen.cat_hospital.bean.DO.Staff" >
         select *
         from staff_table
         where username = #{username} and password = #{password}
@@ -47,7 +47,7 @@
         values (default, #{username}, #{password}, #{realName}, #{keyTime}, #{rolesId},#{showed},#{rightsId},#{intro},#{zaishoku},#{avatar})
     </insert>
 
-    <update id="updateStaffById" parameterType="com.renkaen.cat_hospital.bean.PO.Staff">
+    <update id="updateStaffById" parameterType="com.renkaen.cat_hospital.bean.DO.Staff">
         update staff_table
         set username =ifnull(#{staff.username}, username),
             password=ifnull(#{staff.password},password ),

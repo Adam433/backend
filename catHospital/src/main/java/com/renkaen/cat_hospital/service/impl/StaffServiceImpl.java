@@ -1,9 +1,8 @@
 package com.renkaen.cat_hospital.service.impl;
 
 import com.renkaen.cat_hospital.bean.DTO.StaffJoinRightsDTO;
-import com.renkaen.cat_hospital.bean.PO.Staff;
+import com.renkaen.cat_hospital.bean.DO.Staff;
 import com.renkaen.cat_hospital.bean.VO.RightsVO;
-import com.renkaen.cat_hospital.bean.VO.RolePermissionVO;
 import com.renkaen.cat_hospital.bean.VO.StaffJoinRightsVO;
 import com.renkaen.cat_hospital.bean.VO.StaffVO;
 import com.renkaen.cat_hospital.mapper.StaffMapper;
@@ -19,8 +18,7 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     private StaffMapper staffMapper;
-    @Autowired
-    private RolePermissionServiceImpl rolePermissionService;
+
     @Override
     public StaffVO getById(int id) {
         return new StaffVO(staffMapper.selectUserById(id));
@@ -37,16 +35,6 @@ public class StaffServiceImpl implements StaffService {
 
     public StaffVO getByUsername(String username){
         return new StaffVO(staffMapper.selectStaffByName(username));
-    }
-
-    @Override
-    public RolePermissionVO getByPassword(String username, String password) {
-        Staff staff = staffMapper.selectStaffByPassword(username, password);
-        RolePermissionVO rolePermissionVO = rolePermissionService.getPermissionByRolesId(staff.getId());
-        rolePermissionVO.setName(staff.getRealName());
-        rolePermissionVO.setUsername(staff.getUsername());
-        rolePermissionVO.setRolesId(staff.getRolesId());
-        return rolePermissionVO;
     }
 
     @Override

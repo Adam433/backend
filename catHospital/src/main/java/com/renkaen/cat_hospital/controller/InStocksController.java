@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.controller;
 
-import com.renkaen.cat_hospital.bean.PO.InStocks;
+import com.renkaen.cat_hospital.bean.DO.InStocks;
 import com.renkaen.cat_hospital.bean.VO.InStocksJoinInboundVO;
 import com.renkaen.cat_hospital.bean.VO.InStocksVO;
 import com.renkaen.cat_hospital.service.impl.InStocksServiceImpl;
