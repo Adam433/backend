@@ -1,14 +1,17 @@
 package com.renkaen.cat_hospital.bean.DTO;
 
 import com.renkaen.cat_hospital.bean.DO.Bill;
-import com.renkaen.cat_hospital.bean.DO.Cats;
 import com.renkaen.cat_hospital.bean.DO.Treatment;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-public class RecordsJoinCatsDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class RecordsDTO {
     private Integer recordId;
     private Integer catId;
     private Long key;
@@ -19,5 +22,4 @@ public class RecordsJoinCatsDTO {
     private Integer billStatus;
     private List<Bill> billList;
     private List<Treatment> treatments;
-    private CatsDTO catsDTO;
 }

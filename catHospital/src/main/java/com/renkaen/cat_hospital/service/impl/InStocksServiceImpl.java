@@ -39,8 +39,7 @@ public class InStocksServiceImpl implements InStocksService {
         for (InStocksJoinInboundDTO inStocksJoinInboundDTO:inStocksMapper.selectInStocksJoinInboundByType(type)){
             InStocksJoinInboundVO inStocksJoinInboundVO = new InStocksJoinInboundVO();
             BeanUtils.copyProperties(inStocksJoinInboundDTO,inStocksJoinInboundVO);
-            inStocksJoinInboundVO.setKey(inStocksJoinInboundDTO.getKeyTime());
-            inStocksJoinInboundVO.setName(inStocksJoinInboundDTO.getNamae());
+            inStocksJoinInboundVO.setId(inStocksJoinInboundDTO.getInStocksId());
             List<InboundVO> inboundVOList = new ArrayList<>();
             for(Inbound inbound:inStocksJoinInboundDTO.getInbound()){
                 inboundVOList.add(new InboundVO(inbound));
@@ -69,8 +68,7 @@ public class InStocksServiceImpl implements InStocksService {
     private InStocksVO doToVo(InStocks inStocks){
         InStocksVO inStocksVO = new InStocksVO();
         BeanUtils.copyProperties(inStocks,inStocksVO);
-        inStocksVO.setKey(inStocks.getKeyTime());
-        inStocksVO.setName(inStocks.getNamae());
+        inStocksVO.setId(inStocks.getInStockId());
         return inStocksVO;
     }
 }

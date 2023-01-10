@@ -16,8 +16,8 @@ public interface RecordsService {
 
     List<RecordsVO> getByTimeAndStaffId(long timeStart,long timeEnd,int staffId);
 
-    boolean createRecords(Records records);
+    boolean createRecords(RecordsVO recordsVO);
 
-    RecordsVO updateRecordsById (int id,Records records);
+    RecordsVO updateRecordsById (int id,RecordsVO recordsVO);
     boolean deleteRecordsById(int id);
 }

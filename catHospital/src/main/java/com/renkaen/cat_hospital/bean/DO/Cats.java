@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Cats {
-    private Integer id;
+    private Integer catId;
     private String nickname;
     private String catOwner;
     private String phoneNumber;
     private Long birthday;
-    private Long keyTime;
-    private String vaccine;
-    private String vermifuge;
+    private Long key;
     private Integer sex;
     private Integer sterilize;
 }

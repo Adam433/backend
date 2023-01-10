@@ -2,23 +2,20 @@ package com.renkaen.cat_hospital.bean.DO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Staff {
-    private Integer id;
+    private Integer staffId;
     private String username;
     private String password;
     private String realName;
-    private Long keyTime;
-    private Integer rolesId;
+    private Long key;
+    private Integer roleId;
     private String showed;
-    private Integer rightsId;
     private String intro;
     private Integer zaishoku;
     private String avatar;
-
-    public Staff() {
-
-    }
 }

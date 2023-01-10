@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RolesVO {
     public RolesVO(Roles roles){
-        id = roles.getId();
+        id = roles.getRoleId();
         katagaki = roles.getKatagaki();
-        key = roles.getKeyTime();
+        key = roles.getRoleId();
         roleName = roles.getRoleName();
     }
     private Integer id;

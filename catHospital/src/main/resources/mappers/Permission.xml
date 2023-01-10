@@ -7,7 +7,7 @@
     <select id="selectPermissionByRolesId" resultType="com.renkaen.cat_hospital.bean.DO.Permission">
         SELECT pt.*
         FROM permission_table pt ,role_permission rp
-        WHERE rp.rolesId = #{rolesId} AND rp.permissionId = pt.permissionId
+        WHERE rp.roles_id = #{rolesId} AND rp.permission_id = pt.permission_id
     </select>
 
 </mapper>

@@ -17,33 +17,37 @@ public class CatsController {
     private CatsService catsService;
 
     @GetMapping("/{catId}")
-    public CatsVO getCatsById(@PathVariable("catId") int catId){
+    public CatsVO getCatsById(@PathVariable("catId") int catId) {
         return catsService.getById(catId);
     }
+
     @GetMapping("/phone/{phoneNumber}")
-    public List<CatsVO> getCatsByPhone(@PathVariable("phoneNumber")String phoneNumber){
+    public List<CatsVO> getCatsByPhone(@PathVariable("phoneNumber") String phoneNumber) {
         return catsService.getByPhone(phoneNumber);
     }
+
     @GetMapping("/phonename/{phoneNumber}/{nickname}")
-    public List<CatsVO> getCatsByPhoneAndName(@PathVariable("phoneNumber")String phoneNumber,@PathVariable("nickname")String nickname){
-        return catsService.getByPhoneAndName(phoneNumber,nickname);
+    public List<CatsVO> getCatsByPhoneAndName(@PathVariable("phoneNumber") String phoneNumber, @PathVariable("nickname") String nickname) {
+        return catsService.getByPhoneAndName(phoneNumber, nickname);
     }
+
     @GetMapping("")
-    public List<CatsVO> getAllCats(){
+    public List<CatsVO> getAllCats() {
         return catsService.getAllCats();
     }
+
     @PostMapping("")
-    public Object addCats(@RequestBody CatsVO catsVO){
-        if(
+    public Object addCats(@RequestBody CatsVO catsVO) {
+        if (
                 StringUtils.isNotBlank(catsVO.getCatOwner()) &&
-                        StringUtils.isNotBlank(catsVO.getNickname())&&
-                        StringUtils.isNotBlank(catsVO.getPhoneNumber())&&
-                        (catsVO.getBirthday() !=null && catsVO.getBirthday()>0 )&&
-                        (catsVO.getKey() !=null && catsVO.getKey()>0)&&
-                        (catsVO.getSex() !=null && catsVO.getSex()==0||catsVO.getSex()==1)&&
-                        (catsVO.getSterilize() !=null && catsVO.getSterilize()==0||catsVO.getSterilize()==1)
-        ){
-            Cats cats =  catsService.addCats(catsVOtoCAts(catsVO));
+                        StringUtils.isNotBlank(catsVO.getNickname()) &&
+                        StringUtils.isNotBlank(catsVO.getPhoneNumber()) &&
+                        (catsVO.getBirthday() != null && catsVO.getBirthday() > 0) &&
+                        (catsVO.getKey() != null && catsVO.getKey() > 0) &&
+                        (catsVO.getSex() != null && catsVO.getSex() == 0 || catsVO.getSex() == 1) &&
+                        (catsVO.getSterilize() != null && catsVO.getSterilize() == 0 || catsVO.getSterilize() == 1)
+        ) {
+            CatsVO cats = catsService.addCats(catsVO);
             catsVO.setId(cats.getId());
             return catsVO;
         }
@@ -51,39 +55,25 @@ public class CatsController {
     }
 
     @PatchMapping("/{catId}")
-    public Object updateCats(@PathVariable("catId") int catId,@RequestBody CatsVO catsVO){
-        if(
-                (catsVO.getCatOwner() ==null || StringUtils.isNotBlank(catsVO.getCatOwner())) &&
-                        (catsVO.getNickname() ==null|| StringUtils.isNotBlank(catsVO.getNickname()))&&
-                        (catsVO.getPhoneNumber() ==null || StringUtils.isNotBlank(catsVO.getPhoneNumber()))&&
-                        (catsVO.getBirthday() ==null || catsVO.getBirthday()>0 )&&
-                        (catsVO.getKey() ==null || catsVO.getKey()>0)&&
-                        (catsVO.getSex() ==null || catsVO.getSex()==0||catsVO.getSex()==1)&&
-                        (catsVO.getSterilize() ==null || catsVO.getSterilize()==0||catsVO.getSterilize()==1)
-        ){
-            boolean updateCat = catsService.updateCatsById(catId,catsVOtoCAts(catsVO));
-            return updateCat?catsVO:"数据库添加失败";
+    public Object updateCats(@PathVariable("catId") int catId, @RequestBody CatsVO catsVO) {
+        if (
+                (catsVO.getCatOwner() == null || StringUtils.isNotBlank(catsVO.getCatOwner())) &&
+                        (catsVO.getNickname() == null || StringUtils.isNotBlank(catsVO.getNickname())) &&
+                        (catsVO.getPhoneNumber() == null || StringUtils.isNotBlank(catsVO.getPhoneNumber())) &&
+                        (catsVO.getBirthday() == null || catsVO.getBirthday() > 0) &&
+                        (catsVO.getKey() == null || catsVO.getKey() > 0) &&
+                        (catsVO.getSex() == null || catsVO.getSex() == 0 || catsVO.getSex() == 1) &&
+                        (catsVO.getSterilize() == null || catsVO.getSterilize() == 0 || catsVO.getSterilize() == 1)
+        ) {
+            boolean updateCat = catsService.updateCatsById(catId, catsVO);
+            return updateCat ? catsVO : "数据库更新失败";
         }
         return "数据格式错误";
     }
 
     @DeleteMapping("/{catId}")
-    public String deleteCatsById(@PathVariable("catId") int catId){
-        return catsService.deleteCatsById(catId)?"成功删除":"此id数据不存在";
+    public String deleteCatsById(@PathVariable("catId") int catId) {
+        return catsService.deleteCatsById(catId) ? "成功删除" : "此id数据不存在";
     }
 
-    //VO to DO
-    private Cats catsVOtoCAts(CatsVO catsVO){
-        Cats cats = new Cats();
-        BeanUtils.copyProperties(catsVO,cats);
-        cats.setKeyTime(catsVO.getKey());
-        if(catsVO.getVaccine()!=null){
-            cats.setVaccine(catsVO.getVaccine().toString());
-        }
-        if (catsVO.getVermifuge()!=null){
-            cats.setVermifuge(catsVO.getVermifuge().toString());
-        }
-        System.out.println(cats);
-        return cats;
-    }
 }

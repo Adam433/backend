@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.VermifugeMapper">
+
+    <insert id="insertByCatId" >
+        insert into vermifuge_table(cat_id,`date`)values
+        <foreach collection="vermifugeList"  separator="," item="item">
+            (#{catId},#{item})
+        </foreach>
+    </insert>
+    <delete id="deleteByCatId">
+        delete from vermifuge_table
+        where cat_id = #{catId}
+    </delete>
+
+</mapper>

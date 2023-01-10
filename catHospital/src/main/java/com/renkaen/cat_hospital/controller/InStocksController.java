@@ -66,8 +66,7 @@ public class InStocksController {
     private InStocks voToDo(InStocksVO inStocksVO){
         InStocks inStocks = new InStocks();
         BeanUtils.copyProperties(inStocksVO,inStocks);
-        inStocks.setNamae(inStocksVO.getName());
-        inStocks.setKeyTime(inStocksVO.getKey());
+        inStocks.setInStockId(inStocksVO.getId());
         return inStocks;
     }
 }

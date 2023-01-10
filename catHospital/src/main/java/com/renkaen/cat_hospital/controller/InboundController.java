@@ -53,7 +53,7 @@ public class InboundController {
     private Inbound voToDo(InboundVO inboundVO){
         Inbound inbound = new Inbound();
         BeanUtils.copyProperties(inboundVO,inbound);
-        inbound.setKeyTime(inboundVO.getKey());
+        inbound.setInboundId(inboundVO.getId());
         return inbound;
     }
 }

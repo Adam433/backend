@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 public class StaffVO {
     public StaffVO(Staff staff){
         if(staff!=null){
-        this.id = staff.getId();
+        this.id = staff.getStaffId();
         this.username = staff.getUsername();
         this.password = staff.getPassword();
         this.name = staff.getRealName();
-        this.key = staff.getKeyTime();
-        this.rolesId = staff.getRolesId();
-        this.rightsId = staff.getRightsId();
+        this.key = staff.getKey();
+        this.rolesId = staff.getRoleId();
+        this.rightsId = staff.getStaffId();
         this.intro = staff.getIntro();
         this.zaishoku = staff.getZaishoku();
         this.avatar = staff.getAvatar();

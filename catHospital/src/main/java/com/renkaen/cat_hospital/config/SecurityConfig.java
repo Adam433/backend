@@ -4,8 +4,6 @@ import com.renkaen.cat_hospital.filter.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -62,7 +60,7 @@ public class SecurityConfig {
                 .and()
                 //前后端分离的设置，关闭csrf，如果是前后端不分离的项目，认证信息在cookies，关闭后不安全。
                 .csrf().disable()
-                //配置取消session管理,又Jwt来获取用户状态,否则即使token无效,也会有session信息,依旧判断用户为登录状态
+                //配置取消session管理,用Jwt来获取用户状态,否则即使token无效,也会有session信息,依旧判断用户为登录状态
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()

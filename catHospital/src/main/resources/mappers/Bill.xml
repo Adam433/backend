@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.BillMapper">
+    <select id="selectByRecordId" resultType="com.renkaen.cat_hospital.bean.DO.Bill">
+        select *
+        from bill_table
+        where record_id = #{recordId}
+    </select>
+    <delete id="deleteByRecordId">
+        delete
+        from bill_table
+        where record_id = #{recordId}
+    </delete>
+    <insert id="insertBatch">
+        insert into `bill_table`(`usage` ,`name`,sell_price,record_id) values
+        <foreach collection="billList" separator="," item="item">
+            (#{item.usage},#{item.name},#{item.sellPrice},#{recordId})
+        </foreach>
+    </insert>
+
+</mapper>

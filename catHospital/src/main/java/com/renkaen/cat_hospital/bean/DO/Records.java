@@ -4,14 +4,12 @@ import lombok.Data;
 
 @Data
 public class Records {
-    private Integer id;
+    private Integer recordId;
     private Integer catId;
-    private Long keyTime;
+    private Long key;
     private Integer staffId;
     private String weight;
-    private String treatments;
     private String diagnosis;
     private Integer reserve;
-    private Integer bill;
-    private String billList;
+    private Integer billStatus;
 }

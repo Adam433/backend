@@ -10,7 +10,7 @@ public interface CatsService {
     List<CatsVO> getByPhoneAndName(String phoneNumber,String nickname);
     List<CatsVO> getByPhone(String phoneNumber);
     List<CatsVO> getAllCats();
-    Cats addCats(Cats cats);
-    boolean updateCatsById(int id, Cats cats);
+    CatsVO addCats(CatsVO catsVO);
+    boolean updateCatsById(int id,CatsVO catsVO);
     boolean deleteCatsById(int id);
 }

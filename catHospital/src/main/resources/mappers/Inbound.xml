@@ -8,29 +8,29 @@
     <select id="selectUserById" resultType="com.renkaen.cat_hospital.bean.DO.Inbound">
         select *
         from inbound_table
-        where id = #{id};
+        where inbound_id = #{id};
     </select>
 
-    <insert id="insertInbound" useGeneratedKeys="true" keyProperty="id">
-        insert into inbound_table (id,keyTime,amount,batchNumber,staff,purchasePrice,inStockId)
-        values (default, #{keyTime}, #{amount}, #{batchNumber}, #{staff}, #{purchasePrice},#{inStockId})
+    <insert id="insertInbound" >
+        insert into inbound_table (`key`,amount,batch_number,staff,purchase_price,in_stock_id)
+        values ( #{key}, #{amount}, #{batchNumber}, #{staff}, #{purchasePrice},#{inStockId})
     </insert>
 
     <delete id="deleteInboundById" >
         delete
         from inbound_table
-        where id = #{id};
+        where inbound_id = #{id};
     </delete>
 
     <update id="updateInboundById" parameterType="com.renkaen.cat_hospital.bean.DO.Inbound">
         update inbound_table
-        set keyTime = ifnull(#{inbound.keyTime}, keyTime ),
+        set `key` = ifnull(#{inbound.keyTime}, `key` ),
             amount = ifnull(#{inbound.amount}, amount ),
-            batchNumber = ifnull(#{inbound.batchNumber}, batchNumber ),
+            batch_number = ifnull(#{inbound.batchNumber}, batch_number ),
             staff = ifnull(#{inbound.staff}, staff ),
-            purchasePrice = ifnull(#{inbound.purchasePrice}, purchasePrice ),
-            inStockId = ifnull(#{inbound.inStockId}, inStockId )
-        where id = #{id}
+            purchase_price = ifnull(#{inbound.purchasePrice}, purchase_price ),
+            in_stock_id = ifnull(#{inbound.inStockId}, in_stock_id )
+        where inbound_id = #{id}
     </update>
 
 </mapper>

@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InboundVO {
     public InboundVO(Inbound inbound){
-        id = inbound.getId();
-        key = inbound.getKeyTime();
+        id = inbound.getInboundId();
+        key = inbound.getKey();
         amount = inbound.getAmount();
         batchNumber = inbound.getBatchNumber();
         staff = inbound.getStaff();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renkaen.cat_hospital.mapper.VaccineMapper">
+    <insert id="insertByCatId" >
+        insert into vaccine_table(cat_id,`date`)values
+        <foreach collection="vaccineList"  separator="," item="item">
+            (#{catId},#{item})
+        </foreach>
+    </insert>
+    <delete id="deleteByCatId">
+        delete from vaccine_table
+        where cat_id = #{catId}
+    </delete>
+
+</mapper>

@@ -26,7 +26,7 @@
     <select id="selectUserByRole" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
         select *
         from staff_table
-        where rolesId = #{id_1} or rolesId = #{id_2};
+        where role_id = #{id_1} or role_id = #{id_2};
     </select>
     <!--根据id获得staff join rights-->
     <select id="selectStaffByIdJoinRights" resultMap="staffJoinRights">
@@ -42,29 +42,27 @@
     </select>
 
     <!--新增用户-->
-    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-        insert into staff_table (id, username, password, realName, keyTime, rolesId,showed, rightsId,intro,zaishoku,avatar )
-        values (default, #{username}, #{password}, #{realName}, #{keyTime}, #{rolesId},#{showed},#{rightsId},#{intro},#{zaishoku},#{avatar})
+    <insert id="insertUser">
+        insert into staff_table ( username, password, real_name, `key`, role_id,intro,zaishoku,avatar )
+        values ( #{username}, #{password}, #{realName}, #{key}, #{rolesId},#{intro},#{zaishoku},#{avatar})
     </insert>
 
     <update id="updateStaffById" parameterType="com.renkaen.cat_hospital.bean.DO.Staff">
         update staff_table
         set username =ifnull(#{staff.username}, username),
             password=ifnull(#{staff.password},password ),
-            realName=ifnull(#{staff.realName}, realName),
-            keyTime=ifnull(#{staff.keyTime},keyTime ),
-            rolesId=ifnull(#{staff.rolesId}, rolesId),
-            showed=ifnull(#{staff.showed},showed ),
-            rightsId=ifnull(#{staff.rightsId},rightsId ),
+            real_name=ifnull(#{staff.realName}, real_name),
+            `key`=ifnull(#{staff.keyTime},`key` ),
+            role_id=ifnull(#{staff.rolesId}, role_id),
             intro= ifnull(#{staff.intro}, intro),
             zaishoku= ifnull(#{staff.zaishoku},zaishoku ),
             avatar = ifnull(#{staff.avatar}, avatar )
-        where id = #{id}
+        where staff_id = #{id}
     </update>
 
     <delete id="deleteStaffById">
         delete from staff_table
-        where id = #{id}
+        where staff_id = #{id}
     </delete>
 
 

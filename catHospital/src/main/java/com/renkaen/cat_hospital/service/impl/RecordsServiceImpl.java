@@ -5,7 +5,9 @@ import com.renkaen.cat_hospital.bean.DO.Records;
 import com.renkaen.cat_hospital.bean.VO.CatsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsJoinCatsVO;
+import com.renkaen.cat_hospital.mapper.BillMapper;
 import com.renkaen.cat_hospital.mapper.RecordsMapper;
+import com.renkaen.cat_hospital.mapper.TreatmentMapper;
 import com.renkaen.cat_hospital.service.RecordsService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +21,13 @@ import java.util.List;
 public class RecordsServiceImpl implements RecordsService {
     @Autowired
     private RecordsMapper recordsMapper;
+    @Autowired
+    private     BillMapper billMapper;
+    @Autowired
+    private TreatmentMapper treatmentMapper;
     @Override
     public RecordsVO getById(int id) {
-        return new RecordsVO(recordsMapper.selectByid(id));
+        return new RecordsVO(recordsMapper.selectByid(id), treatmentMapper.selectTreatmentByRecordId(id), billMapper.selectByRecordId(id));
     }
 
     @Override
@@ -47,22 +53,25 @@ public class RecordsServiceImpl implements RecordsService {
     @Override
     public List<RecordsVO> getByTimeAndStaffId(long timeStart, long timeEnd, int staffId) {
         List<RecordsVO> voList = new ArrayList<>();
-        for(Records records: recordsMapper.selectRecordByTimeAndStaffId(timeStart,timeEnd,staffId)){
-            voList.add(new RecordsVO(records));
-        }
+        //TODO
+//for(Records records: recordsMapper.selectRecordByTimeAndStaffId(timeStart,timeEnd,staffId)){
+//            voList.add(new RecordsVO(records));
+//        }
         return voList;
     }
 
     @Override
-    public boolean createRecords(Records records) {
-        return recordsMapper.insertRecords(records);
+    public boolean createRecords(RecordsVO recordsVO) {
+        return recordsMapper.insertRecords(recordsVOToRecord(recordsVO));
     }
 
     @Override
-    public RecordsVO updateRecordsById(int id,Records records) {
-        recordsMapper.updateRecordsById(id,records);
-        System.out.println(records);
-        return new RecordsVO(records);
+    public RecordsVO updateRecordsById(int id,RecordsVO recordsVO) {
+        recordsMapper.updateRecordsById(id,recordsVO);
+//        System.out.println(records);
+        //TODO
+//        return new RecordsVO(records);
+        return null;
     }
 
     @Override
@@ -72,21 +81,39 @@ public class RecordsServiceImpl implements RecordsService {
 
 //    DTO -->  VO
     private List<RecordsJoinCatsVO> dtoToVo (List<RecordsJoinCatsDTO> dtoList){
+        System.out.println(dtoList);
+        //TODO 数据格式转换
         List<RecordsJoinCatsVO> recordsJoinCatsVOList = new ArrayList<>();
         for(RecordsJoinCatsDTO recordsJoinCatsDTO :dtoList){
             RecordsJoinCatsVO recordsJoinCatsVO = new RecordsJoinCatsVO();
             BeanUtils.copyProperties(recordsJoinCatsDTO, recordsJoinCatsVO);
-            recordsJoinCatsVO.setDate(recordsJoinCatsDTO.getKeyTime());
-            recordsJoinCatsVO.setCat(new CatsVO(recordsJoinCatsDTO.getCats()));
+            recordsJoinCatsVO.setDate(recordsJoinCatsDTO.getKey());
+            recordsJoinCatsVO.setId(recordsJoinCatsDTO.getRecordId());
+
+            recordsJoinCatsVO.setCat(new CatsVO(recordsJoinCatsDTO.getCatsDTO()));
             recordsJoinCatsVO.getCat().setId(recordsJoinCatsDTO.getCatId());
-            if(recordsJoinCatsDTO.getBillList()!=null){
-                recordsJoinCatsVO.setBillList(JSONArray.fromObject(recordsJoinCatsDTO.getBillList()));
-            }
-            if(recordsJoinCatsDTO.getTreatments()!=null){
-                recordsJoinCatsVO.setTreatments(JSONArray.fromObject(recordsJoinCatsDTO.getTreatments()));
-            }
+//            if(recordsJoinCatsDTO.getBillList()!=null){
+//                recordsJoinCatsVO.setBillList(JSONArray.fromObject(recordsJoinCatsDTO.getBillList()));
+//            }
+//            if(recordsJoinCatsDTO.getTreatments()!=null){
+//                recordsJoinCatsVO.setTreatments(JSONArray.fromObject(recordsJoinCatsDTO.getTreatments()));
+//            }
             recordsJoinCatsVOList.add(recordsJoinCatsVO);
         }
+        System.out.println(recordsJoinCatsVOList);
         return recordsJoinCatsVOList;
+    }
+    //VO 转 DO
+    private Records recordsVOToRecord(RecordsVO recordsVO){
+        Records records = new Records();
+        BeanUtils.copyProperties(recordsVO,records);
+        records.setRecordId(recordsVO.getId());
+//        if(recordsVO.getBillList() != null){
+//            records.setBillList(recordsVO.getBillList().toString());
+//        }
+//        if (recordsVO.getTreatments() != null){
+//            records.setTreatments(recordsVO.getTreatments().toString());
+//        }
+        return records;
     }
 }

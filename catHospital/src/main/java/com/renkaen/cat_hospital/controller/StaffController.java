@@ -85,7 +85,7 @@ public class StaffController {
     private Staff staffVOtoDO (StaffVO staffVO){
         Staff staff = new Staff() ;
         BeanUtils.copyProperties(staffVO,staff);
-        staff.setKeyTime(staffVO.getKey());
+        staff.setStaffId(staffVO.getId());
         staff.setRealName(staffVO.getName());
         if(staffVO.getShowed()!=null){
         staff.setShowed(StringUtils.join(staffVO.getShowed(),","));}

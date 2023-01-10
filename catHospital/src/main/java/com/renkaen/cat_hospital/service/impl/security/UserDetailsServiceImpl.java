@@ -32,8 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Staff staff = staffMapper.selectStaffByName(username);//根据用户名查找用户
         if (staff != null) {
             //这里查询了一次数据库，拿到了所有的权限信息，可以根据权限信息整理出侧边栏的菜单结构
-            List<Permission> permissions = permissionMapper.selectPermissionByRolesId(staff.getRolesId());
-            List<Roles> roles = rolesMapper.selectByStaffId(staff.getId());
+            List<Permission> permissions = permissionMapper.selectPermissionByRolesId(staff.getRoleId());
+            List<Roles> roles = rolesMapper.selectByStaffId(staff.getStaffId());
             //菜单栏permissionsVO
             List<Permission> permissionsVO = new ArrayList<>();
             //权限信息

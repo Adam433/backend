@@ -6,10 +6,10 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class InStocksJoinInboundDTO {
-    private Integer id;
+    private Integer InStocksId;
     private Integer type;
-    private String namae;
-    private Long keyTime;
+    private String name;
+    private Long key;
     private Integer consumed;
     private Double sellPrice;
     private String brand;

@@ -33,7 +33,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         //token = null
         if(StringUtils.isBlank(token)){
-            System.out.println("token为空");
             //放行
             filterChain.doFilter(request,response);
             return;

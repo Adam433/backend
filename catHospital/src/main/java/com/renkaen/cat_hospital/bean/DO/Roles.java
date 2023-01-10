@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class Roles {
-    private Integer id;
+    private Integer roleId;
     private String katagaki;
-    private Integer keyTime;
     private String roleName;
 }

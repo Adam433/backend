@@ -59,8 +59,7 @@ public class RecordsController {
                         recordsVO.getBill() != null &&
                         StringUtils.isNotBlank(recordsVO.getWeight())
         ){
-            Records records = recordsVOToRecord(recordsVO);
-            boolean inputType = recordsService.createRecords(records);
+            boolean inputType = recordsService.createRecords(recordsVO);
             return inputType? recordsVO:"数据库写入失败";
         }else {
             return "字段不齐";
@@ -76,7 +75,7 @@ public class RecordsController {
                         (recordsVO.getReserve() == null|| recordsVO.getReserve() == 1||recordsVO.getReserve() == 0) &&
                         (recordsVO.getBill() == null || (recordsVO.getBill()>=0 && recordsVO.getBill()<=2 ) )
         ){
-            RecordsVO updateSuccess = recordsService.updateRecordsById(recordsId, recordsVOToRecord(recordsVO));
+            RecordsVO updateSuccess = recordsService.updateRecordsById(recordsId, recordsVO);
             return  updateSuccess;
         }
         return "数据格式有误";
@@ -87,19 +86,7 @@ public class RecordsController {
         return recordsService.deleteRecordsById(recordsId)?"成功删除":"无此id数据";
     }
 
-    //VO 转 DO
-    private Records recordsVOToRecord(RecordsVO recordsVO){
-        Records records = new Records();
-        BeanUtils.copyProperties(recordsVO,records);
-        records.setKeyTime(recordsVO.getDate());
-        if(recordsVO.getBillList() != null){
-            records.setBillList(recordsVO.getBillList().toString());
-        }
-        if (recordsVO.getTreatments() != null){
-            records.setTreatments(recordsVO.getTreatments().toString());
-        }
-        return records;
-    }
+
 
 
 }

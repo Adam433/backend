@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class InStocks {
-    private Integer id;
+    private Integer inStockId;
     private Integer type;
-    private String namae;
-    private Long keyTime;
+    private String name;
+    private Long key;
     private Integer consumed;
     private Double sellPrice;
     private String brand;
