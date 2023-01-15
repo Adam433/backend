@@ -10,11 +10,17 @@ import java.util.List;
 @Mapper
 public interface CatsMapper {
     CatsDTO selectById(int catId);
-    List<CatsDTO> selectCatByPhoneNick(String phoneNumber,String nickname);
+
+    List<CatsDTO> selectCatByPhoneNick(String phoneNumber, String nickname);
+
     List<CatsDTO> selectCatByPhone(String phoneNumber);
+
     List<CatsDTO> selectAllCats();
+
     boolean insertCats(Cats cats);
+
     boolean updateCatsById(int id, Cats cats);
+
     boolean deleteCatsById(int id);
 
 

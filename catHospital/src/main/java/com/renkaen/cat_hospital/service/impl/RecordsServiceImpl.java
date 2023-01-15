@@ -1,7 +1,9 @@
 package com.renkaen.cat_hospital.service.impl;
 
+import com.renkaen.cat_hospital.bean.DO.Bill;
+import com.renkaen.cat_hospital.bean.DTO.RecordsDTO;
 import com.renkaen.cat_hospital.bean.DTO.RecordsJoinCatsDTO;
-import com.renkaen.cat_hospital.bean.DO.Records;
+import com.renkaen.cat_hospital.bean.VO.BillVO;
 import com.renkaen.cat_hospital.bean.VO.CatsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsJoinCatsVO;
@@ -9,7 +11,6 @@ import com.renkaen.cat_hospital.mapper.BillMapper;
 import com.renkaen.cat_hospital.mapper.RecordsMapper;
 import com.renkaen.cat_hospital.mapper.TreatmentMapper;
 import com.renkaen.cat_hospital.service.RecordsService;
-import net.sf.json.JSONArray;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,13 @@ public class RecordsServiceImpl implements RecordsService {
     @Autowired
     private RecordsMapper recordsMapper;
     @Autowired
-    private     BillMapper billMapper;
+    private BillMapper billMapper;
     @Autowired
     private TreatmentMapper treatmentMapper;
+
     @Override
     public RecordsVO getById(int id) {
-        return new RecordsVO(recordsMapper.selectByid(id), treatmentMapper.selectTreatmentByRecordId(id), billMapper.selectByRecordId(id));
+        return new RecordsVO(recordsMapper.selectById(id));
     }
 
     @Override
@@ -53,67 +55,73 @@ public class RecordsServiceImpl implements RecordsService {
     @Override
     public List<RecordsVO> getByTimeAndStaffId(long timeStart, long timeEnd, int staffId) {
         List<RecordsVO> voList = new ArrayList<>();
-        //TODO
-//for(Records records: recordsMapper.selectRecordByTimeAndStaffId(timeStart,timeEnd,staffId)){
-//            voList.add(new RecordsVO(records));
-//        }
+        for (RecordsDTO recordsDTO : recordsMapper.selectRecordByTimeAndStaffId(timeStart, timeEnd, staffId)) {
+            voList.add(new RecordsVO(recordsDTO));
+        }
         return voList;
     }
 
     @Override
     public boolean createRecords(RecordsVO recordsVO) {
-        return recordsMapper.insertRecords(recordsVOToRecord(recordsVO));
+        RecordsDTO recordsDTO = new RecordsDTO(recordsVO);
+        boolean created = recordsMapper.insertRecords(recordsDTO);
+        if (!recordsDTO.getBillList().isEmpty() && created) {
+            billMapper.insertBatch(recordsDTO.getRecordId(), recordsDTO.getBillList());
+        }
+        if (!recordsDTO.getTreatments().isEmpty() && created) {
+            treatmentMapper.batchInsertByRecordId(recordsDTO.getRecordId(), recordsDTO.getTreatments());
+        }
+        return created;
     }
 
     @Override
-    public RecordsVO updateRecordsById(int id,RecordsVO recordsVO) {
-        recordsMapper.updateRecordsById(id,recordsVO);
-//        System.out.println(records);
-        //TODO
-//        return new RecordsVO(records);
-        return null;
+    public RecordsVO updateRecordsById(int id, RecordsVO recordsVO) {
+        RecordsDTO recordsDTO = new RecordsDTO(recordsVO);
+        boolean exist = recordsMapper.updateRecordsById(id, recordsDTO);
+        if (recordsDTO.getTreatments() != null && exist) {
+            treatmentMapper.deleteByRecordId(id);
+            if (!recordsDTO.getTreatments().isEmpty()) {
+                treatmentMapper.batchInsertByRecordId(id, recordsDTO.getTreatments());
+            }
+        }
+        if (recordsDTO.getBillList() != null && exist) {
+            billMapper.deleteByRecordId(id);
+            if (!recordsDTO.getBillList().isEmpty()) {
+                billMapper.insertBatch(id, recordsDTO.getBillList());
+            }
+        }
+        return exist ? recordsVO : null;
     }
 
     @Override
     public boolean deleteRecordsById(int id) {
-        return recordsMapper.deleteRecordsById(id);
+        boolean deleted = recordsMapper.deleteRecordsById(id);
+        if (deleted) {
+            billMapper.deleteByRecordId(id);
+            treatmentMapper.deleteByRecordId(id);
+        }
+        return deleted;
     }
 
-//    DTO -->  VO
-    private List<RecordsJoinCatsVO> dtoToVo (List<RecordsJoinCatsDTO> dtoList){
-        System.out.println(dtoList);
-        //TODO 数据格式转换
+    //    DTO -->  VO
+    private List<RecordsJoinCatsVO> dtoToVo(List<RecordsJoinCatsDTO> dtoList) {
         List<RecordsJoinCatsVO> recordsJoinCatsVOList = new ArrayList<>();
-        for(RecordsJoinCatsDTO recordsJoinCatsDTO :dtoList){
+        for (RecordsJoinCatsDTO recordsJoinCatsDTO : dtoList) {
             RecordsJoinCatsVO recordsJoinCatsVO = new RecordsJoinCatsVO();
             BeanUtils.copyProperties(recordsJoinCatsDTO, recordsJoinCatsVO);
             recordsJoinCatsVO.setDate(recordsJoinCatsDTO.getKey());
             recordsJoinCatsVO.setId(recordsJoinCatsDTO.getRecordId());
-
+            recordsJoinCatsVO.setBill(recordsJoinCatsDTO.getBillStatus());
             recordsJoinCatsVO.setCat(new CatsVO(recordsJoinCatsDTO.getCatsDTO()));
             recordsJoinCatsVO.getCat().setId(recordsJoinCatsDTO.getCatId());
-//            if(recordsJoinCatsDTO.getBillList()!=null){
-//                recordsJoinCatsVO.setBillList(JSONArray.fromObject(recordsJoinCatsDTO.getBillList()));
-//            }
-//            if(recordsJoinCatsDTO.getTreatments()!=null){
-//                recordsJoinCatsVO.setTreatments(JSONArray.fromObject(recordsJoinCatsDTO.getTreatments()));
-//            }
+            List<BillVO> billVOList = new ArrayList<>();
+            for (Bill bill : recordsJoinCatsDTO.getBillList()) {
+                billVOList.add(new BillVO(bill));
+            }
+            recordsJoinCatsVO.setBillList(billVOList);
             recordsJoinCatsVOList.add(recordsJoinCatsVO);
         }
-        System.out.println(recordsJoinCatsVOList);
         return recordsJoinCatsVOList;
     }
-    //VO 转 DO
-    private Records recordsVOToRecord(RecordsVO recordsVO){
-        Records records = new Records();
-        BeanUtils.copyProperties(recordsVO,records);
-        records.setRecordId(recordsVO.getId());
-//        if(recordsVO.getBillList() != null){
-//            records.setBillList(recordsVO.getBillList().toString());
-//        }
-//        if (recordsVO.getTreatments() != null){
-//            records.setTreatments(recordsVO.getTreatments().toString());
-//        }
-        return records;
-    }
+
 }

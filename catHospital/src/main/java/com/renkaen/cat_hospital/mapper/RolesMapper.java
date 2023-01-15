@@ -1,6 +1,6 @@
 package com.renkaen.cat_hospital.mapper;
 
-import com.renkaen.cat_hospital.bean.DTO.RolesJoinRightsDTO;
+import com.renkaen.cat_hospital.bean.DTO.RolesJoinPermissionDTO;
 import com.renkaen.cat_hospital.bean.DO.Roles;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,6 +15,11 @@ public interface RolesMapper {
 
     List<Roles> selectByStaffId(int staffId);
 
-    List<RolesJoinRightsDTO> selectAllRolesJoinRights();
+    List<RolesJoinPermissionDTO> selectAllRolesJoinPermissions();
 
+    RolesJoinPermissionDTO selectRoleJoinPermissionsById(int roleId);
+
+    boolean deletePermissionByRoleId(int roleId);
+
+    boolean insertPermissionByRoleId(int roleId, List<Integer> list);
 }

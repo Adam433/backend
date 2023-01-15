@@ -4,25 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.renkaen.cat_hospital.mapper.RolesMapper">
 
-    <resultMap id="rolesAndRights" type="com.renkaen.cat_hospital.bean.DTO.RolesJoinRightsDTO" autoMapping="true">
-        <association property="rights" javaType="com.renkaen.cat_hospital.bean.DO.Rights" autoMapping="true"/>
+    <resultMap id="joinPermission" type="com.renkaen.cat_hospital.bean.DTO.RolesJoinPermissionDTO" autoMapping="true">
+        <collection property="permissionList" column="role_id=role_id" select="selectPermissions"/>
     </resultMap>
-    <select id="selectAllRolesJoinRights" resultMap="rolesAndRights">
+    <select id="selectAllRolesJoinPermissions" resultMap="joinPermission">
         select *
-        from roles_table roles left join rights_table rights on rights.id=roles.rightsId
+        from roles_table
+    </select>
+    <select id="selectPermissions" resultType="com.renkaen.cat_hospital.bean.DO.Permission">
+        select *
+        from permission_table
+        where permission_id in (select permission_id
+                                from role_permission
+                                where role_id = #{role_id})
+    </select>
+    <select id="selectRoleJoinPermissionsById" resultMap="joinPermission">
+        select *
+        from roles_table
+        where role_id = #{roleId}
     </select>
 
     <select id="selectByStaffId" resultType="com.renkaen.cat_hospital.bean.DO.Roles">
         select r.*
-        from roles_table r , staff_role sr
-        where sr.staff_id = #{staffId} and r.role_id = sr.role_id
+        from roles_table r,
+             staff_role sr
+        where sr.staff_id = #{staffId}
+          and r.role_id = sr.role_id
     </select>
 
     <!--根据权限id获取权限信息-->
     <select id="selectById" resultType="com.renkaen.cat_hospital.bean.DO.Roles">
         select *
         from roles_table
-        where role_id = #{id};
+        where role_id = #{id}
     </select>
 
     <select id="selectAll" resultType="com.renkaen.cat_hospital.bean.DO.Roles">
@@ -30,7 +44,15 @@
         from roles_table
     </select>
 
-
-
-
+    <delete id="deletePermissionByRoleId">
+        delete
+        from role_permission
+        where role_id = #{roleId}
+    </delete>
+    <insert id="insertPermissionByRoleId">
+        insert into role_permission(permission_id, role_id) values
+        <foreach collection="list" separator="," item="item">
+            (#{item},#{roleId})
+        </foreach>
+    </insert>
 </mapper>

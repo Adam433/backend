@@ -1,8 +1,11 @@
 package com.renkaen.cat_hospital.bean.VO;
 
+import com.renkaen.cat_hospital.bean.DO.Treatment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.sf.json.JSONArray;
+
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class RecordsJoinCatsVO {
@@ -11,10 +14,10 @@ public class RecordsJoinCatsVO {
     private Long date;
     private Integer staffId;
     private String weight;
-    private JSONArray treatments;
+    private List<Treatment> treatments;
     private String diagnosis;
     private Integer reserve;
     private Integer bill;
-    private JSONArray billList;
+    private List<BillVO> billList;
     private CatsVO cat;
 }

@@ -7,7 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface BillMapper {
-    List<Bill> selectByRecordId (int recordId);
-    boolean deleteByRecordId (int recordId);
-    boolean insertBatch (int recordId, List<Bill> billList);
+    List<Bill> selectByRecordId(int recordId);
+
+    boolean deleteByRecordId(int recordId);
+
+    boolean insertBatch(int recordId, List<Bill> billList);
 }

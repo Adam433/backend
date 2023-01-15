@@ -16,8 +16,7 @@ import java.util.List;
 
 @SpringBootTest
 class CatHospitalApplicationTests {
-    @Autowired
-    private RightServiceImpl rightService;
+
     @Autowired
     private BillService billService;
     @Test

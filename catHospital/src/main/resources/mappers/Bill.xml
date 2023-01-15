@@ -13,11 +13,11 @@
         from bill_table
         where record_id = #{recordId}
     </delete>
+
     <insert id="insertBatch">
-        insert into `bill_table`(`usage` ,`name`,sell_price,record_id) values
+        insert into bill_table(`usage` ,`name`, sell_price , record_id)values
         <foreach collection="billList" separator="," item="item">
             (#{item.usage},#{item.name},#{item.sellPrice},#{recordId})
         </foreach>
     </insert>
-
 </mapper>

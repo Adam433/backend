@@ -3,69 +3,136 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.renkaen.cat_hospital.mapper.StaffMapper">
-    <resultMap id="staffJoinRights" type="com.renkaen.cat_hospital.bean.DTO.StaffJoinRightsDTO" autoMapping="true">
-        <association property="rights" javaType="com.renkaen.cat_hospital.bean.DO.Rights" autoMapping="true"/>
+    <resultMap id="joinPermission" type="com.renkaen.cat_hospital.bean.DTO.StaffJoinPermissionDTO" autoMapping="true">
+        <collection property="permissionList" column="staff_id=staff_id" select="selectPermissionByStaffId"/>
     </resultMap>
+    <select id="selectPermissionByStaffId" resultType="com.renkaen.cat_hospital.bean.DO.Permission">
+        select *
+        from permission_table
+        where permission_id in (select permission_id
+                                from role_permission
+                                where role_id in (select role_id
+                                                  from staff_role
+                                                  where staff_id = #{staff_id}))
+    </select>
+    <resultMap id="joinShowed" type="com.renkaen.cat_hospital.bean.DTO.StaffJoinShowedDTO" autoMapping="true">
+        <collection property="showed" column="staff_id=staff_id" select="selectShowedByStaffId"/>
+        <collection property="katagaki" column="staff_id=staff_id" select="selectKatagakiByStaffId"/>
+    </resultMap>
+    <select id="selectShowedByStaffId" resultType="String">
+        select pt.url
+        from permission_table pt
+        where permission_id in (select permission_id
+                                from showed_staff ss
+                                where staff_id = #{staff_id})
+    </select>
+    <select id="selectKatagakiByStaffId" resultType="String">
+        select rt.katagaki
+        from roles_table rt
+        where role_id in (select role_id
+                          from staff_role sr
+                          where staff_id = #{staff_id})
+    </select>
     <!--根据权限id获取权限信息-->
-    <select id="selectUserById" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
+    <select id="selectUserById" resultMap="joinShowed">
         select *
         from staff_table
-        where id = #{id};
+        where staff_id = #{id};
     </select>
-    <select id="selectAllUser" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
+    <select id="selectAllUser" resultMap="joinShowed">
         select *
         from staff_table
     </select>
 
-    <!--查询用户名是否被占用-->
-    <select id="selectStaffByName" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
-        select * from staff_table where username = #{username}
+    <!--根据id查password-->
+    <select id="selectPasswordById" resultType="String">
+        select password
+        from staff_table
+        where staff_id = #{staffId}
+    </select>
+    <!--根据用户名查用户以及权限-->
+    <select id="selectStaffByNameJoinPermission" resultMap="joinPermission">
+        select *
+        from staff_table
+        where username = #{username}
+    </select>
+
+    <select id="selectStaffByName" resultMap="joinShowed">
+        select *
+        from staff_table
+        where username = #{username}
     </select>
 
     <!--获取所有医生-->
-    <select id="selectUserByRole" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
+    <select id="selectUserByRole" resultMap="joinShowed">
         select *
         from staff_table
-        where role_id = #{id_1} or role_id = #{id_2};
+        where staff_id in (select staff_id
+                           from staff_role
+                           where role_id = #{id_1}
+                              or role_id = #{id_2})
     </select>
     <!--根据id获得staff join rights-->
-    <select id="selectStaffByIdJoinRights" resultMap="staffJoinRights">
-        select *
-        from ( select * from staff_table where id = #{id}) staff left join rights_table rights
-        on staff.rightsId = rights.id
-    </select>
-    <!--根据username, password获得staff join rights-->
-    <select id="selectStaffByPassword" resultType="com.renkaen.cat_hospital.bean.DO.Staff" >
+    <select id="selectStaffByIdJoinRights" resultMap="joinPermission">
         select *
         from staff_table
-        where username = #{username} and password = #{password}
+        where Staff_id = #{StaffId}
+    </select>
+    <!--根据username, password获得staff join rights-->
+    <select id="selectStaffByPassword" resultType="com.renkaen.cat_hospital.bean.DO.Staff">
+        select *
+        from staff_table
+        where username = #{username}
+          and password = #{password}
     </select>
 
     <!--新增用户-->
-    <insert id="insertUser">
-        insert into staff_table ( username, password, real_name, `key`, role_id,intro,zaishoku,avatar )
-        values ( #{username}, #{password}, #{realName}, #{key}, #{rolesId},#{intro},#{zaishoku},#{avatar})
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="staffId">
+        insert into staff_table (username, password, real_name, `key`, intro, zaishoku, avatar)
+        values (#{username}, #{password}, #{realName}, #{key}, #{intro}, #{zaishoku}, #{avatar})
     </insert>
 
-    <update id="updateStaffById" parameterType="com.renkaen.cat_hospital.bean.DO.Staff">
+    <update id="updateStaffById" parameterType="com.renkaen.cat_hospital.bean.DTO.StaffJoinShowedDTO">
         update staff_table
-        set username =ifnull(#{staff.username}, username),
-            password=ifnull(#{staff.password},password ),
-            real_name=ifnull(#{staff.realName}, real_name),
-            `key`=ifnull(#{staff.keyTime},`key` ),
-            role_id=ifnull(#{staff.rolesId}, role_id),
-            intro= ifnull(#{staff.intro}, intro),
-            zaishoku= ifnull(#{staff.zaishoku},zaishoku ),
-            avatar = ifnull(#{staff.avatar}, avatar )
+        set username =ifnull(#{staffJoinShowedDTO.username}, username),
+            password=ifnull(#{staffJoinShowedDTO.password}, password),
+            real_name=ifnull(#{staffJoinShowedDTO.realName}, real_name),
+            `key`=ifnull(#{staffJoinShowedDTO.key}, `key`),
+            intro= ifnull(#{staffJoinShowedDTO.intro}, intro),
+            zaishoku= ifnull(#{staffJoinShowedDTO.zaishoku}, zaishoku),
+            avatar   = ifnull(#{staffJoinShowedDTO.avatar}, avatar)
         where staff_id = #{id}
     </update>
 
     <delete id="deleteStaffById">
-        delete from staff_table
+        delete
+        from staff_table
         where staff_id = #{id}
     </delete>
 
-
-
+    <delete id="deleteShowed">
+        delete
+        from showed_staff
+        where staff_id = #{staffId}
+    </delete>
+    <insert id="insertShowed">
+        insert into showed_staff (staff_id, permission_id)
+        values
+        <foreach collection="showedList" separator="," item="item">
+            (#{staffId},#{item})
+        </foreach>
+    </insert>
+    <delete id="deleteRoles">
+        delete
+        from staff_role
+        where staff_id = #{staffId}
+    </delete>
+    <insert id="insertRoles">
+        insert into staff_role(staff_id, role_id)
+        values
+        <foreach collection="roleList" separator="," item="item">
+            (#{staffId},#{item})
+        </foreach>
+    </insert>
 
 </mapper>

@@ -12,4 +12,8 @@ public interface RolesService {
     List<Roles> getAll();
 
     List<RolesJoinRightsVO> getRolesJoinRights();
+
+    RolesJoinRightsVO getRoleJoinRightsById(int roleId);
+
+    boolean updateRoleJoinRightsById(int roleId,RolesJoinRightsVO rolesJoinRightsVO);
 }

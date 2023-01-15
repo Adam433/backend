@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface TreatmentMapper {
-    List<Treatment> selectTreatmentByRecordId(int recordId);
+
+    boolean deleteByRecordId(int recordId);
+    boolean batchInsertByRecordId(int recordId,List<Treatment> treatmentList);
 }

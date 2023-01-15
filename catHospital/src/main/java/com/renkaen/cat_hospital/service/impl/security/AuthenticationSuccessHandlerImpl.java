@@ -37,12 +37,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         HashMap<String,Object> map = new HashMap<>();
         //jwt中生成的token响应给前端
         map.put("token",jwt);
-        map.put("menu",userDetails.getPermissions());
+        map.put("staff",userDetails.getRights());
 
-        //将要返回前端的JSON创建出来
-        ResponseResult responseResult = new ResponseResult(HttpStatus.OK.value(), "登陆成功",map);
-        //将这个JSON转化为JSON字符串
-        String responseResultString = JSON.toJSONString(responseResult);
+        //转化为JSON字符串
+        String responseResultString = JSON.toJSONString(map);
         //将JSON字符串写入response中
         WebUtil.renderString(response,responseResultString);
     }

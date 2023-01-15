@@ -76,7 +76,7 @@ public class RecordsController {
                         (recordsVO.getBill() == null || (recordsVO.getBill()>=0 && recordsVO.getBill()<=2 ) )
         ){
             RecordsVO updateSuccess = recordsService.updateRecordsById(recordsId, recordsVO);
-            return  updateSuccess;
+            return  updateSuccess!=null?updateSuccess:"数据更新失败";
         }
         return "数据格式有误";
     };
@@ -85,8 +85,4 @@ public class RecordsController {
     public String deleteRecordsById(@PathVariable("recordsId") int recordsId){
         return recordsService.deleteRecordsById(recordsId)?"成功删除":"无此id数据";
     }
-
-
-
-
 }

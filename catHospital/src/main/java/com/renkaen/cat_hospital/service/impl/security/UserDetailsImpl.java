@@ -1,6 +1,9 @@
 package com.renkaen.cat_hospital.service.impl.security;
 
+import com.alibaba.druid.sql.visitor.functions.Right;
 import com.renkaen.cat_hospital.bean.DO.Permission;
+import com.renkaen.cat_hospital.bean.VO.RightVO;
+import com.renkaen.cat_hospital.bean.VO.StaffJoinRightsVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,23 +20,25 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDetailsImpl implements UserDetails {
     private String password;
+    private Integer id;
     private  String username;
     private List<String> authorities;
-    private List<Permission> permissions;
+    private StaffJoinRightsVO rights;
     private  boolean accountNonExpired;
     private  boolean accountNonLocked;
     private  boolean credentialsNonExpired;
     private  boolean enabled;
 
-    public UserDetailsImpl(String username,String password, List<String> authorities, List<Permission> permissions){
+    public UserDetailsImpl(String username, String password, List<String> authorities, StaffJoinRightsVO staffJoinRightsVO){
         this.username = username;
         this.password = password;
         this.authorities = authorities;
-        this.permissions = permissions;
+        this.rights = staffJoinRightsVO;
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
         this.enabled = true;
+        this.id = id;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

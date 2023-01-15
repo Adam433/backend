@@ -11,7 +11,7 @@ public interface InStocksService {
     List<InStocksVO> getAll();
     List<InStocksJoinInboundVO> getAllInStocksJoinInbound(int type);
 
-    boolean updateInStocksById(int id,InStocks inStocks);
-    boolean addInStocks(InStocks inStocks);
+    InStocksVO updateInStocksById(int id, InStocks inStocks);
+    InStocksVO addInStocks(InStocks inStocks);
     boolean deleteInStocksById(int id);
 }

@@ -2,7 +2,7 @@ package com.renkaen.cat_hospital.controller;
 
 import com.renkaen.cat_hospital.bean.DO.Inbound;
 import com.renkaen.cat_hospital.bean.VO.InboundVO;
-import com.renkaen.cat_hospital.service.impl.InBoundServiceImpl;
+import com.renkaen.cat_hospital.service.InboundService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("inbound")
 public class InboundController {
     @Autowired
-    private InBoundServiceImpl inBoundService;
+    private InboundService inBoundService;
 
     @GetMapping("/{inboundId}")
     public InboundVO getByInboundId(@PathVariable("inboundId") int inboundId){
@@ -27,7 +27,7 @@ public class InboundController {
                 (inboundVO.getPurchasePrice()!=null && inboundVO.getPurchasePrice()>=0)&&
                 StringUtils.isNotBlank(inboundVO.getBatchNumber()) &&
                 StringUtils.isNotBlank(inboundVO.getStaff()) ){
-            return inBoundService.addInbound(voToDo(inboundVO))? inboundVO : "数据添加失败";
+            return inBoundService.addInbound(voToDo(inboundVO));
         }
         return "数据格式有误";
     }
@@ -45,7 +45,12 @@ public class InboundController {
                 (inboundVO.getPurchasePrice()==null || inboundVO.getPurchasePrice()>=0)&&
                 ( inboundVO.getBatchNumber()==null || StringUtils.isNotBlank(inboundVO.getBatchNumber()) )&&
                 ( inboundVO.getStaff() ==null || StringUtils.isNotBlank(inboundVO.getStaff()) ) ){
-           return inBoundService.updateInboundById(inboundId,voToDo(inboundVO))?inboundVO:"更新失败";
+            Inbound inbound = inBoundService.updateInboundById(inboundId,voToDo(inboundVO));
+            if(inbound!=null){
+                return new InboundVO(inbound);
+            }else{
+                return "更新失败";
+            }
         }
         return "数据格式错误";
     }

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class InStocksJoinInboundDTO {
-    private Integer InStocksId;
+    private Integer inStocksId;
     private Integer type;
     private String name;
     private Long key;

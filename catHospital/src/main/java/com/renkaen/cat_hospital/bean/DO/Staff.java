@@ -13,8 +13,6 @@ public class Staff {
     private String password;
     private String realName;
     private Long key;
-    private Integer roleId;
-    private String showed;
     private String intro;
     private Integer zaishoku;
     private String avatar;

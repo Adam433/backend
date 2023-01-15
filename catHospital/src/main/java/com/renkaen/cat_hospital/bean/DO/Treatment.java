@@ -12,5 +12,5 @@ public class Treatment {
     private Integer recordId;
     private Integer inStockId;
     private Integer usage;
-    private Integer done;
+    private Boolean done;
 }

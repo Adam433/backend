@@ -1,7 +1,6 @@
 package com.renkaen.cat_hospital.service.impl;
 
 import com.renkaen.cat_hospital.bean.DO.Cats;
-import com.renkaen.cat_hospital.bean.DO.Vaccine;
 import com.renkaen.cat_hospital.bean.DTO.CatsDTO;
 import com.renkaen.cat_hospital.bean.VO.CatsVO;
 import com.renkaen.cat_hospital.mapper.CatsMapper;
@@ -23,67 +22,82 @@ public class CatsServiceImpl implements CatsService {
     private VaccineMapper vaccineMapper;
     @Autowired
     private VermifugeMapper vermifugeMapper;
+
     //--------------------------------------------------------------get
     @Override
     public CatsVO getById(int id) {
         CatsDTO catsDTO = catsMapper.selectById(id);
-        if(catsDTO!=null){
-        return new CatsVO(catsDTO);}
+        if (catsDTO != null) {
+            return new CatsVO(catsDTO);
+        }
         return null;
     }
+
     @Override
-    public  List<CatsVO> getByPhoneAndName(String phoneNumber,String nickname) {
+    public List<CatsVO> getByPhoneAndName(String phoneNumber, String nickname) {
         List<CatsVO> catsVOList = new ArrayList<>();
-        for(CatsDTO catsDTO:catsMapper.selectCatByPhoneNick(phoneNumber,nickname)){
+        for (CatsDTO catsDTO : catsMapper.selectCatByPhoneNick(phoneNumber, nickname)) {
             catsVOList.add(new CatsVO(catsDTO));
         }
         return catsVOList;
     }
+
     @Override
-    public  List<CatsVO> getByPhone(String phoneNumber) {
+    public List<CatsVO> getByPhone(String phoneNumber) {
         List<CatsVO> catsVOList = new ArrayList<>();
-        for(CatsDTO catsDTO:catsMapper.selectCatByPhone(phoneNumber)){
+        for (CatsDTO catsDTO : catsMapper.selectCatByPhone(phoneNumber)) {
             catsVOList.add(new CatsVO(catsDTO));
         }
         return catsVOList;
     }
+
     @Override
     public List<CatsVO> getAllCats() {
         List<CatsDTO> catsList = catsMapper.selectAllCats();
         List<CatsVO> catsVOList = new ArrayList<>();
-        for(CatsDTO catsDTO: catsList){
+        for (CatsDTO catsDTO : catsList) {
             catsVOList.add(new CatsVO(catsDTO));
         }
         return catsVOList;
     }
+
     //--------------------------------------------------------------add
     @Override
     public CatsVO addCats(CatsVO catsVO) {
         Cats cats = catsVOtoCAts(catsVO);
         catsMapper.insertCats(cats);
         int catId = cats.getCatId();
-        if (catsVO.getVaccine()!=null){
-            vaccineMapper.insertByCatId(catId,catsVO.getVaccine());
+        if (catsVO.getVaccine() != null && !catsVO.getVaccine().isEmpty()) {
+            vaccineMapper.insertByCatId(catId, catsVO.getVaccine());
         }
-        if(catsVO.getVermifuge()!=null){
-            vermifugeMapper.insertByCatId(catId,catsVO.getVermifuge());
+        if (catsVO.getVermifuge() != null && !catsVO.getVermifuge().isEmpty()) {
+            vermifugeMapper.insertByCatId(catId, catsVO.getVermifuge());
         }
         return catsVO;
     }
+
     //--------------------------------------------------------------update
     @Override
-    public boolean updateCatsById(int id, CatsVO catsVO) {
-        vaccineMapper.deleteByCatId(id);
-        vermifugeMapper.deleteByCatId(id);
-        boolean exist = catsMapper.updateCatsById(id,catsVOtoCAts(catsVO));
-        if (catsVO.getVaccine()!=null&&exist){
-            vaccineMapper.insertByCatId(id,catsVO.getVaccine());
+    public CatsVO updateCatsById(int id, CatsVO catsVO) {
+        boolean exist = catsMapper.updateCatsById(id, catsVOtoCAts(catsVO));
+        if (catsVO.getVaccine() != null && exist) {
+            vaccineMapper.deleteByCatId(id);
+            if (!catsVO.getVaccine().isEmpty()) {
+                vaccineMapper.insertByCatId(id, catsVO.getVaccine());
+            }
         }
-        if(catsVO.getVermifuge()!=null&&exist){
-            vermifugeMapper.insertByCatId(id,catsVO.getVermifuge());
+        if (catsVO.getVermifuge() != null && exist) {
+            vermifugeMapper.deleteByCatId(id);
+            if (!catsVO.getVermifuge().isEmpty()) {
+                vermifugeMapper.insertByCatId(id, catsVO.getVermifuge());
+            }
         }
-        return exist;
+        if(exist){
+            return new CatsVO(catsMapper.selectById(id));
+        }
+        return null;
     }
+
     //--------------------------------------------------------------delete
     @Override
     public boolean deleteCatsById(int id) {

@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface PermissionMapper {
-    List<Permission>  selectPermissionByRolesId (int rolesId);
+    List<Integer> selectAllPermissionId();
+
+    List<Permission> selectAllPermission();
 }

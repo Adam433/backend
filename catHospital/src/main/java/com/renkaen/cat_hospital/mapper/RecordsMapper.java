@@ -1,5 +1,6 @@
 package com.renkaen.cat_hospital.mapper;
 
+import com.renkaen.cat_hospital.bean.DTO.RecordsDTO;
 import com.renkaen.cat_hospital.bean.DTO.RecordsJoinCatsDTO;
 import com.renkaen.cat_hospital.bean.DO.Records;
 import com.renkaen.cat_hospital.bean.VO.RecordsVO;
@@ -10,16 +11,22 @@ import java.util.List;
 
 @Mapper
 public interface RecordsMapper {
-    @Select("select * from records_table where id = #{id}")
-    Records selectByid(int id);
 
-    boolean insertRecords(Records records);
+    RecordsDTO selectById(int recordId);
 
-    boolean updateRecordsById(int id, RecordsVO recordsVO);
+    boolean insertRecords(RecordsDTO records);
+
+    boolean updateRecordsById(int id, RecordsDTO recordsDTO);
+
     boolean deleteRecordsById(int id);
-    List<RecordsJoinCatsDTO> selectRecordJoinCat (int billStatus);
+
+    List<RecordsJoinCatsDTO> selectRecordJoinCat(int billStatus);
+
     List<RecordsJoinCatsDTO> selectRecordJoinCatByAssistant();
+
     List<RecordsJoinCatsDTO> selectRecordJoinCatByStaffId(int staffId);
+
     List<RecordsJoinCatsDTO> selectRecordsByTime(long timeStart);
-    List<Records> selectRecordByTimeAndStaffId(long timeStart,long timeEnd,int staffId);
+
+    List<RecordsDTO> selectRecordByTimeAndStaffId(long timeStart, long timeEnd, int staffId);
 }

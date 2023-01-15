@@ -4,10 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.renkaen.cat_hospital.mapper.PermissionMapper">
 
-    <select id="selectPermissionByRolesId" resultType="com.renkaen.cat_hospital.bean.DO.Permission">
-        SELECT pt.*
-        FROM permission_table pt ,role_permission rp
-        WHERE rp.roles_id = #{rolesId} AND rp.permission_id = pt.permission_id
+    <select id="selectAllPermissionId" resultType="Integer">
+        SELECT permission_id
+        FROM permission_table
+    </select>
+    <select id="selectAllPermission" resultType="com.renkaen.cat_hospital.bean.DO.Permission">
+        select *
+        from permission_table
     </select>
 
 </mapper>

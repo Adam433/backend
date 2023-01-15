@@ -38,8 +38,7 @@ public class InStocksController {
                 (inStocksVO.getSellPrice()==null||inStocksVO.getSellPrice()>=0)&&
                 (inStocksVO.getName()==null || StringUtils.isNotBlank(inStocksVO.getName()))
         ){
-            boolean react = inStocksService.updateInStocksById(inStocksId,voToDo(inStocksVO));
-            return react? inStocksVO:"数据库更新失败";
+            return inStocksService.updateInStocksById(inStocksId,voToDo(inStocksVO));
         };
         return "数据格式不符";
     }
@@ -53,7 +52,7 @@ public class InStocksController {
                         (inStocksVO.getSellPrice()!=null&&inStocksVO.getSellPrice()>=0)&&
                         StringUtils.isNotBlank(inStocksVO.getName())
         ){
-            return inStocksService.addInStocks(voToDo(inStocksVO))?inStocksVO:"数据库添加失败";
+            return inStocksService.addInStocks(voToDo(inStocksVO));
         }
         return "数据格式不符";
     }

@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.renkaen.cat_hospital.mapper.TreatmentMapper">
 
+    <delete id="deleteByRecordId">
+        delete
+        from treatment_table
+        where record_id = #{recordId}
+    </delete>
 
-
+    <insert id="batchInsertByRecordId">
+        insert into treatment_table(record_id,in_stock_id,`usage`,`done`)values
+        <foreach collection="treatmentList"  separator="," item="item">
+            (#{recordId} , #{item.inStockId},#{item.usage},#{item.done})
+        </foreach>
+    </insert>
 </mapper>

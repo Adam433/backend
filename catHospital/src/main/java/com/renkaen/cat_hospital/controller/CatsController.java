@@ -65,8 +65,7 @@ public class CatsController {
                         (catsVO.getSex() == null || catsVO.getSex() == 0 || catsVO.getSex() == 1) &&
                         (catsVO.getSterilize() == null || catsVO.getSterilize() == 0 || catsVO.getSterilize() == 1)
         ) {
-            boolean updateCat = catsService.updateCatsById(catId, catsVO);
-            return updateCat ? catsVO : "数据库更新失败";
+            return catsService.updateCatsById(catId, catsVO);
         }
         return "数据格式错误";
     }

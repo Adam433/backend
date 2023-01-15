@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InBoundServiceImpl implements InboundService {
+public class InboundServiceImpl implements InboundService {
     @Autowired
     private InboundMapper inboundMapper;
 
@@ -18,8 +18,9 @@ public class InBoundServiceImpl implements InboundService {
     }
 
     @Override
-    public boolean addInbound(Inbound inbound) {
-        return inboundMapper.insertInbound(inbound);
+    public InboundVO addInbound(Inbound inbound) {
+        inboundMapper.insertInbound(inbound);
+        return new InboundVO(inbound);
     }
 
     @Override
@@ -28,7 +29,10 @@ public class InBoundServiceImpl implements InboundService {
     }
 
     @Override
-    public boolean updateInboundById(int id, Inbound inbound) {
-        return inboundMapper.updateInboundById(id,inbound);
+    public Inbound updateInboundById(int id, Inbound inbound) {
+        if (inboundMapper.updateInboundById(id,inbound)){
+            return inboundMapper.selectById(id);
+        }
+        return null;
     }
 }
