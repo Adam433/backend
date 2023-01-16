@@ -1,0 +1,179 @@
+[
+    {
+        "id": 1,
+        "username": "admin123",
+        "password": "Qwer4321",
+        "name": "张佳佳",
+        "key": 1502173286454,
+        "showed": [
+            "/right/page",
+            "/inStock/pricing",
+            "/todo",
+            "/todo/doctor",
+            "/todo/assistant",
+            "/todo/reserve",
+            "/archives",
+            "/archives/cats",
+            "/archives/records",
+            "/user/add",
+            "/user/edit",
+            "/inStock",
+            "/inStock/list",
+            "/user/list",
+            "/right/role",
+            "/user",
+            "/right"
+        ],
+        "rolesId": "1",
+        "rightsId": "1",
+        "intro": "<h3><span style=\"color: rgb(0,168,133);\">・経歴</span></h3>\n<p><span style=\"font-size: 10px;\">平成18年4月</span><br><span style=\"font-size: 10px;\">はとがや動物病院副院長</span><br><span style=\"font-size: 10px;\">平成21年4月</span><br><span style=\"font-size: 10px;\">どうぶつ園通りの動物病院院長（旭川）</span></p>\n<h3><span style=\"color: rgb(0,168,133);\">・業績</span></h3>\n<p><span style=\"font-size: 10px;\">AO Vet Table Instructor</span><br><span style=\"font-size: 10px;\">DePuySynthes骨折セミナー講師・インストラクター</span></p>\n<h3><span style=\"color: rgb(0,168,133);\">・資格</span></h3>\n<p><span style=\"font-size: 10px;\">AO Principle course 修了<br>AO Advance course　修了<br>Synthes Vet TPLO seminar 修了<br>Synthes Vet Spine seminar Advance 修了</span></p>\n<h3><span style=\"color: rgb(0,168,133);\">・所属学会</span></h3>\n<p><span style=\"font-size: 10px;font-family: Arial;\">日獣医麻酔外科学会<br>獣医神経病学会<br>北獣協<br>旭川小動物臨床研究会 </span></p>\n",
+        "zaishoku": 1,
+        "avatar": "https://joeschmoe.io/api/v1/random",
+        "rights": {
+            "id": 1,
+            "title": "管理页面",
+            "key": "/",
+            "right": 1,
+            "showed": 1,
+            "rank": 0,
+            "children": [
+                {
+                    "title": "人员管理",
+                    "key": "/user",
+                    "right": 1,
+                    "showed": 1,
+                    "rank": 1,
+                    "children": [
+                        {
+                            "title": "用户列表",
+                            "key": "/user/list",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "添加用户",
+                            "key": "/user/add",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "用户信息维护",
+                            "key": "/user/edit",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        }
+                    ]
+                },
+                {
+                    "title": "权限管理",
+                    "key": "/right",
+                    "right": 1,
+                    "showed": 1,
+                    "rank": 1,
+                    "children": [
+                        {
+                            "title": "角色权限",
+                            "key": "/right/role",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "页面显示控制",
+                            "key": "/right/page",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        }
+                    ]
+                },
+                {
+                    "title": "库存及定价管理",
+                    "key": "/inStock",
+                    "right": 1,
+                    "showed": 1,
+                    "rank": 1,
+                    "children": [
+                        {
+                            "title": "库存管理",
+                            "key": "/inStock/list",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "定价管理",
+                            "key": "/inStock/pricing",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        }
+                    ]
+                },
+                {
+                    "title": "待办事项",
+                    "key": "/todo",
+                    "right": 1,
+                    "showed": 1,
+                    "rank": 1,
+                    "children": [
+                        {
+                            "title": "待医生处理病历",
+                            "key": "/todo/doctor",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "待助理处理病历",
+                            "key": "/todo/assistant",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "预约就诊表",
+                            "key": "/todo/reserve",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        }
+                    ]
+                },
+                {
+                    "title": "档案管理",
+                    "key": "/archives",
+                    "right": 1,
+                    "showed": 1,
+                    "rank": 1,
+                    "children": [
+                        {
+                            "title": "宠物档案",
+                            "key": "/archives/cats",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "病历档案",
+                            "key": "/archives/records",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        },
+                        {
+                            "title": "新建病历",
+                            "key": "/archives/addrecord",
+                            "right": 1,
+                            "showed": 1,
+                            "rank": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
