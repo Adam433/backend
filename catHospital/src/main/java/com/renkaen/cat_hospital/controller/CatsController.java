@@ -6,6 +6,7 @@ import com.renkaen.cat_hospital.service.CatsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class CatsController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public List<CatsVO> getAllCats() {
         return catsService.getAllCats();
     }
@@ -71,6 +73,7 @@ public class CatsController {
     }
 
     @DeleteMapping("/{catId}")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public String deleteCatsById(@PathVariable("catId") int catId) {
         return catsService.deleteCatsById(catId) ? "成功删除" : "此id数据不存在";
     }

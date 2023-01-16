@@ -6,6 +6,7 @@ import com.renkaen.cat_hospital.service.InboundService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,11 +16,13 @@ public class InboundController {
     private InboundService inBoundService;
 
     @GetMapping("/{inboundId}")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public InboundVO getByInboundId(@PathVariable("inboundId") int inboundId){
         return inBoundService.getById(inboundId);
     };
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public Object addInbound(@RequestBody InboundVO inboundVO){
         if( (inboundVO.getAmount()!=null && inboundVO.getAmount()>0) &&
                 (inboundVO.getKey()!=null && inboundVO.getKey()>0) &&
@@ -33,11 +36,13 @@ public class InboundController {
     }
 
     @DeleteMapping("/{inboundId}")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public String deleteInboundById(@PathVariable("inboundId") int inboundId){
         return inBoundService.deleteInboundById(inboundId)?"成功删除":"不存在此id数据";
     }
 
     @PatchMapping("/{inboundId}")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public Object updateInboundById(@PathVariable("inboundId")int inboundId,@RequestBody InboundVO inboundVO){
         if ( (inboundVO.getAmount()==null || inboundVO.getAmount()>0) &&
                 (inboundVO.getKey()==null || inboundVO.getKey()>0) &&

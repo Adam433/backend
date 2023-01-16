@@ -7,6 +7,7 @@ import com.renkaen.cat_hospital.service.impl.InStocksServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,19 +19,23 @@ public class InStocksController {
     private InStocksServiceImpl inStocksService;
     //--------------------------------------------------------------get
     @GetMapping("/{inStocksId}")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public InStocksVO getByInStocksId(@PathVariable("inStocksId") int inStocksId){
         return inStocksService.getById(inStocksId);
     }
     @GetMapping("")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public List<InStocksVO> getAll(){
         return inStocksService.getAll();
     }
     @GetMapping("/type/{type}")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public List<InStocksJoinInboundVO> getAllinStockJoinInbound(@PathVariable("type")int type){
         return inStocksService.getAllInStocksJoinInbound(type);
     }
     //--------------------------------------------------------------update\delete\add
     @PatchMapping("/{inStocksId}")
+    @PreAuthorize("hasAnyRole('admin','assistant','doctor')")
     public Object updateInStocksById (@PathVariable("inStocksId") int inStocksId, @RequestBody InStocksVO inStocksVO ){
         if((inStocksVO.getType()==null||inStocksVO.getType()==1||inStocksVO.getType()==0)&&
                 (inStocksVO.getConsumed()==null||inStocksVO.getConsumed()>=0)&&
@@ -44,6 +49,7 @@ public class InStocksController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public Object addInStocks (@RequestBody InStocksVO inStocksVO){
         if(
                 (inStocksVO.getType()!=null&&inStocksVO.getType()==1||inStocksVO.getType()==0)&&
@@ -58,6 +64,7 @@ public class InStocksController {
     }
 
     @DeleteMapping("/{inStocksId}")
+    @PreAuthorize("hasAnyRole('admin','assistant')")
     public String deleteInStocksById(@PathVariable("inStocksId")int inStocksId){
         return inStocksService.deleteInStocksById(inStocksId)?"成功删除":"无此id数据";
     }

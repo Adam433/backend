@@ -20,22 +20,26 @@ public class RolesController {
 
     //拿到所有role join rights
     @GetMapping("/rights")
+    @PreAuthorize("hasAnyRole('admin')")
     public List<RolesJoinRightsVO> getRolesJoinRights() {
         return rolesService.getRolesJoinRights();
     }
 
     //拿到某个id的role Join rights
     @GetMapping("/rights/{roleId}")
+    @PreAuthorize("hasAnyRole('admin')")
     public RolesJoinRightsVO getRoleJoinRightsById(@PathVariable("roleId") int roleId) {
         return rolesService.getRoleJoinRightsById(roleId);
     }
 
     @GetMapping("/{roleId}")
+    @PreAuthorize("hasAnyRole('admin')")
     public RolesVO getRolesById(@PathVariable("roleId") int roleId) {
         return new RolesVO(rolesService.getById(roleId));
     }
 
     @GetMapping("")
+    @PreAuthorize("hasAnyRole('admin')")
     public List<RolesVO> getAllRoles() {
         List<RolesVO> rolesVOList = new ArrayList<>();
         for (Roles roles : rolesService.getAll()) {
@@ -44,7 +48,7 @@ public class RolesController {
         return rolesVOList;
     }
     @PatchMapping("rights/{roleId}")
-    @PreAuthorize("hasAnyRole('ROLE_admin')")
+    @PreAuthorize("hasAnyRole('admin')")
     public Object updateRoleJoinRightById(@PathVariable("roleId") int roleId,@RequestBody RolesJoinRightsVO rolesJoinRightsVO){
         return rolesService.updateRoleJoinRightsById(roleId,rolesJoinRightsVO)?rolesJoinRightsVO:"更新失敗";
     }

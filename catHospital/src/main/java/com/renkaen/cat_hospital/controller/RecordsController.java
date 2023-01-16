@@ -27,16 +27,19 @@ public class RecordsController {
     }
     //根据账单完成情况查询所有的病历
     @GetMapping("/bill/{bill}")
+    @PreAuthorize("hasAnyRole('admin','doctor','assistant')")
     public List<RecordsJoinCatsVO> getRecordByBill(@PathVariable("bill")int bill){
         return recordsService.getByBill(bill);
     }
     //获取助手应该处理的病历
     @GetMapping("/assistant")
+    @PreAuthorize("hasAnyRole('admin','doctor','assistant')")
     public List<RecordsJoinCatsVO> getRecordByAssistant(){
         return recordsService.getByAssistant();
     }
     //获得应该由某位医生处理的病历
     @GetMapping("/doctor/{staffId}")
+    @PreAuthorize("hasAnyRole('admin','doctor')")
     public List<RecordsJoinCatsVO> getRecordByStaffId(@PathVariable("staffId")int staffId){
         return recordsService.getByStaffId(staffId);
     }
@@ -71,7 +74,7 @@ public class RecordsController {
     };
 
     @PatchMapping("/{recordsId}")
-    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_doctor','ROLE_assistant')")
+    @PreAuthorize("hasAnyRole('admin','doctor','assistant')")
     public Object updateRecordsById(@PathVariable("recordsId") int recordsId , @RequestBody RecordsVO recordsVO){
         if (
                 ( recordsVO.getCatId()==null||recordsVO.getCatId() >0 ) &&
@@ -87,7 +90,7 @@ public class RecordsController {
     };
 
     @DeleteMapping("/{recordsId}")
-    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_doctor','ROLE_assistant')")
+    @PreAuthorize("hasAnyRole('admin','doctor','assistant')")
     public String deleteRecordsById(@PathVariable("recordsId") int recordsId){
         return recordsService.deleteRecordsById(recordsId)?"成功删除":"无此id数据";
     }
