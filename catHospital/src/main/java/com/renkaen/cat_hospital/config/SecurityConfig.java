@@ -68,9 +68,9 @@ public class SecurityConfig {
                 //这里表示"/any"和"/ignore"不需要权限校验
                 .antMatchers(HttpMethod.GET, "/records/*/*/*", "/staff/username/*",
                         "/cats/phonename/*/*", "/staff", "/staff/*",
-                        "/records/timestart/*", "/cats/phonename/*/*").permitAll()//
+                        "/records/timestart/*", "/cats/phone/*").permitAll()//
                 .antMatchers(HttpMethod.DELETE, "/records/*/*").permitAll()
-                .antMatchers(HttpMethod.POST, "/staff/register").permitAll();
+                .antMatchers(HttpMethod.POST, "/staff/register","/cats","/records").permitAll();
         //.anyRequest().authenticated(); //这里表示任何请求都需要校验认证(上面配置的放行)
 
 
