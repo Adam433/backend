@@ -6,8 +6,11 @@ import com.renkaen.cat_hospital.bean.VO.StaffJoinRightsVO;
 import com.renkaen.cat_hospital.service.StaffService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -16,7 +19,7 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    //    @PreAuthorize("hasAnyAuthority('test3')")
+
     @GetMapping("/{staffId}")
     public StaffJoinShowedVO getStaffById(@PathVariable("staffId") int id) {
         return staffService.getById(id);
@@ -45,6 +48,7 @@ public class StaffController {
 
     //--------------------------------------------------------------update\delete\add
     @PostMapping("")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     public Object createUser(@RequestBody StaffJoinShowedVO staffJoinShowedVO) {
         if (
                 StringUtils.isNotBlank(staffJoinShowedVO.getUsername()) &&
@@ -59,7 +63,22 @@ public class StaffController {
         return "数据格式异常";
     }
 
+    @PostMapping("/register")
+    public Object userRegister(@RequestBody StaffJoinShowedVO staffJoinShowedVO) {
+        if (
+                StringUtils.isNotBlank(staffJoinShowedVO.getUsername()) &&
+                        StringUtils.isNotBlank(staffJoinShowedVO.getPassword()) &&
+                        StringUtils.isNotBlank(staffJoinShowedVO.getName()) &&
+                        StringUtils.isNotBlank(String.valueOf(staffJoinShowedVO.getKey()))
+        ) {
+            staffJoinShowedVO.setKatagaki(new ArrayList<>(Arrays.asList("游客")));
+            return staffService.createUser(staffJoinShowedVO) ? staffJoinShowedVO : "数据库写入失败";
+        }
+        return "数据格式异常";
+    }
+
     @PatchMapping("/{staffId}")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     public Object updateStaffById(@PathVariable("staffId") int staffId, @RequestBody StaffJoinShowedVO staffJoinShowedVO) {
         if (
                 (staffJoinShowedVO.getUsername() == null || StringUtils.isNotBlank(staffJoinShowedVO.getUsername())) &&
@@ -74,7 +93,23 @@ public class StaffController {
         return "数据格式异常";
     }
 
+    @PatchMapping("/self/{staffId}")
+    public Object updateStaffBySelfId(@PathVariable("staffId") int staffId, @RequestBody StaffJoinShowedVO staffJoinShowedVO) {
+        if (
+                (staffJoinShowedVO.getUsername() == null || StringUtils.isNotBlank(staffJoinShowedVO.getUsername())) &&
+                        (staffJoinShowedVO.getPassword() == null || StringUtils.isNotBlank(staffJoinShowedVO.getPassword())) &&
+                        (staffJoinShowedVO.getName() == null || StringUtils.isNotBlank(staffJoinShowedVO.getName())) &&
+                        (staffJoinShowedVO.getShowed() == null || StringUtils.isNotBlank(staffJoinShowedVO.getShowed().toString()))
+        ) {
+            staffJoinShowedVO.setKey(null);
+            staffJoinShowedVO.setKatagaki(null);
+            return staffService.updateStaffById(staffId, staffJoinShowedVO) ? staffJoinShowedVO : "数据库更新失败";
+        }
+        return "数据格式异常";
+    }
+
     @DeleteMapping("/{staffId}")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     public String deleteStaffById(@PathVariable("staffId") int staffId) {
         return staffService.deleteStaffById(staffId) ? "成功删除" : "无此id的数据";
     }

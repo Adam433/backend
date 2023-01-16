@@ -5,6 +5,7 @@ import com.renkaen.cat_hospital.bean.VO.RolesJoinRightsVO;
 import com.renkaen.cat_hospital.bean.VO.RolesVO;
 import com.renkaen.cat_hospital.service.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class RolesController {
         return rolesVOList;
     }
     @PatchMapping("rights/{roleId}")
+    @PreAuthorize("hasAnyRole('ROLE_admin')")
     public Object updateRoleJoinRightById(@PathVariable("roleId") int roleId,@RequestBody RolesJoinRightsVO rolesJoinRightsVO){
         return rolesService.updateRoleJoinRightsById(roleId,rolesJoinRightsVO)?rolesJoinRightsVO:"更新失敗";
     }

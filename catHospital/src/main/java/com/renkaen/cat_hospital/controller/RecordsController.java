@@ -3,10 +3,12 @@ package com.renkaen.cat_hospital.controller;
 import com.renkaen.cat_hospital.bean.DO.Records;
 import com.renkaen.cat_hospital.bean.VO.RecordsVO;
 import com.renkaen.cat_hospital.bean.VO.RecordsJoinCatsVO;
+import com.renkaen.cat_hospital.mapper.CatsMapper;
 import com.renkaen.cat_hospital.service.impl.RecordsServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public class RecordsController {
     @Autowired
     private RecordsServiceImpl recordsService;
+    @Autowired
+    private CatsMapper catsMapper;
     //--------------------------------------------------------------get
     @GetMapping("/{recordsId}")
     public RecordsVO getRecordsById(@PathVariable("recordsId") int recordsId){
@@ -67,6 +71,7 @@ public class RecordsController {
     };
 
     @PatchMapping("/{recordsId}")
+    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_doctor','ROLE_assistant')")
     public Object updateRecordsById(@PathVariable("recordsId") int recordsId , @RequestBody RecordsVO recordsVO){
         if (
                 ( recordsVO.getCatId()==null||recordsVO.getCatId() >0 ) &&
@@ -82,7 +87,16 @@ public class RecordsController {
     };
 
     @DeleteMapping("/{recordsId}")
+    @PreAuthorize("hasAnyRole('ROLE_admin','ROLE_doctor','ROLE_assistant')")
     public String deleteRecordsById(@PathVariable("recordsId") int recordsId){
         return recordsService.deleteRecordsById(recordsId)?"成功删除":"无此id数据";
+    }
+    @DeleteMapping("/{recordsId}/{phoneNumber}")
+    public String cancelRecordsById(@PathVariable("recordsId") int recordsId,@PathVariable("phoneNumber") String phoneNumber){
+        Integer catId =  recordsService.getById(recordsId).getCatId();
+        if(catsMapper.selectById(catId).getPhoneNumber().equals(phoneNumber)){
+            return recordsService.deleteRecordsById(recordsId)?"成功取消":"无此预约";
+        };
+        return "无此权限";
     }
 }

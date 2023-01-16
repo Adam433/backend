@@ -4,6 +4,7 @@ import com.renkaen.cat_hospital.filter.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -65,9 +66,12 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 //这里表示"/any"和"/ignore"不需要权限校验
-                .antMatchers().permitAll()
-                .anyRequest().authenticated();
-                // 这里表示任何请求都需要校验认证(上面配置的放行)
+                .antMatchers(HttpMethod.GET, "/records/*/*/*", "/staff/username/*",
+                        "/cats/phonename/*/*", "/staff", "/staff/*",
+                        "/records/timestart/*", "/cats/phonename/*/*").permitAll()//
+                .antMatchers(HttpMethod.DELETE, "/records/*/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/staff/register").permitAll();
+        //.anyRequest().authenticated(); //这里表示任何请求都需要校验认证(上面配置的放行)
 
 
         http.formLogin()//表单认证方式，不是采用接口访问
