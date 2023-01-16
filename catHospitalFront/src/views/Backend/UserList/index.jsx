@@ -18,7 +18,7 @@ export default function UserList() {
   const navi = useNavigate()
   //映射数组
   const color = ['', 'red', 'geekblue', 'green','']
-  const catagaki = ['', '院长', '医生', '助理','未分配']
+  const catagaki = ['', '院长', '医生', '助理','游客']
   useEffect(() => {
     axios.get(`http://localhost:7899/staff`).then(res => {
       // console.log(res.data);

@@ -30,7 +30,7 @@ export default function Doctor() {
                 <Col  align="middle" span={16}>
                     <div>
                         <Image style={contentStyle}
-                            src="https://joeschmoe.io/api/v1/random"
+                            src="http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
                         />
                         <div className='name' >{doctor.length !== 0 ? doctor.name : '' }</div>
                     </div>

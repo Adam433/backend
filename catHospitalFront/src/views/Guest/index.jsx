@@ -64,22 +64,22 @@ const routeList = {
           <Carousel autoplay>
             <div>
             <Image style={contentStyle} onClick={()=>navi('/guest/doctor/1')}
-                src="https://joeschmoe.io/api/v1/random"
+                src="http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
               />
             </div>
             <div>
             <Image style={contentStyle} onClick={()=>navi('/guest/doctor/2')}
-                src="https://joeschmoe.io/api/v1/random"
+                src="http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
               />
             </div>
             <div>
             <Image style={contentStyle} onClick={()=>navi('/guest/doctor/3')}
-                src="https://joeschmoe.io/api/v1/random"
+                src="http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
               />
             </div>
             <div>
             <Image style={contentStyle} onClick={()=>navi('/guest/doctor/4')}
-                src="https://joeschmoe.io/api/v1/random"
+                src="http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
               />
             </div>
           </Carousel>

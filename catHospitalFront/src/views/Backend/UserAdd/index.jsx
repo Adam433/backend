@@ -111,7 +111,7 @@ export default function UserAdd(props) {
       })
     }
     if (page === 'self') {
-      axios.patch(`http://localhost:7899/staff/${JSON.parse(localStorage.getItem('token')).id}`, { ...info }).then(res => {
+      axios.patch(`http://localhost:7899/staff/self/${JSON.parse(localStorage.getItem('token')).id}`, { ...info }).then(res => {
         // console.log(res);
         notification['success']({
           message: '更新成功',
@@ -169,7 +169,7 @@ export default function UserAdd(props) {
       key: moment(value.key).valueOf(),
       intro: content,
       zaishoku: 1,
-      avatar: "https://joeschmoe.io/api/v1/random"
+      avatar: "http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"
     }
     // console.log(arr);
     setIsModalVisible(true);
@@ -291,7 +291,7 @@ export default function UserAdd(props) {
             <Option value="院长" ></Option>
             <Option value="医生"></Option>
             <Option value="助理"></Option>
-            <Option value="未分配"></Option>
+            <Option value="游客"></Option>
           </Select>
         </Form.Item>
         {/* 头像地址暂时不支持修改 */}
@@ -300,7 +300,7 @@ export default function UserAdd(props) {
           label="头像地址"
           valuePropName="filelist"
         >
-          <Input disabled='ture' value={"https://joeschmoe.io/api/v1/random"}></Input>
+          <Input disabled='ture' value={"http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg"}></Input>
         </Form.Item>
 
         {/* 富文本框 */}

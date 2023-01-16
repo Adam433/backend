@@ -31,7 +31,7 @@ export default function UserAdd() {
   const checkName = async (_, value) => {
 
     let arr = 1
-    await axios.get(`http://localhost:7899/staff?username=${value}`).then(res => {
+    await axios.get(`http://localhost:7899/staff/username/${value}`).then(res => {
       arr = res.data
     })
     if (arr[0] === undefined) {
@@ -69,29 +69,10 @@ export default function UserAdd() {
       intro: "<p></p>",
       rightsId: "4",
       zaishoku: 0,
-      avatar: "https://joeschmoe.io/api/v1/random",
-      showed: [
-        "/right/page",
-        "/inStock/pricing",
-        "/todo",
-        "/todo/doctor",
-        "/todo/assistant",
-        "/todo/reserve",
-        "/archives",
-        "/archives/cats",
-        "/archives/records",
-        "/user/add",
-        "/user/edit",
-        "/right",
-        "/inStock",
-        "/inStock/list",
-        "/user",
-        "/user/list",
-        "/right/role"
-      ],
+      avatar: "http://p0.itc.cn/images01/20201218/03697d2d279144c0a4b05e4cb2016aae.jpeg",
     }
 
-    axios.post('http://localhost:7899/staff', arr).then(res => {
+    axios.post('http://localhost:7899/staff/register', arr).then(res => {
       notification['success']({
         message: '创建成功',
         description:

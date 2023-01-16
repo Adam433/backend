@@ -33,7 +33,7 @@ export default function Appointment() {
 
 
   const delAppointment = (record) => {
-    axios.delete(`http://localhost:7899/records/${record.id}`).then(res => {
+    axios.delete(`http://localhost:7899/records/${record.id}/${guest}`).then(res => {
       message.info('已经成功取消该次预约')
       setData(data.filter(item => {
         return item.id !== record.id
@@ -73,8 +73,7 @@ export default function Appointment() {
         localStorage.setItem('guest', res.data[0].phoneNumber)
         setTimeout(() => {
           axios.get(`http://localhost:7899/records/timestart/${Date.now()}`).then(res => { 
-  
-            if(res.data){
+            if(res.data.length===0){
               message.error('没有查询到预约记录')
             }
             setData(res.data.filter(record => {
@@ -82,13 +81,14 @@ export default function Appointment() {
             }));
           })
           axios.get(`http://localhost:7899/staff`).then(res => {
+            console.log(res);
             let arr = []
             res.data.forEach(item => {
               arr[item.id] = item.name
             })
             setDoctorList(arr);
           })
-        }, 500);
+        }, 1500);
       } else {
         message.error('未查询到信息，请确认输入是否正确或到预约界面进行预约')
       }
