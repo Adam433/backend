@@ -1,3 +1,171 @@
+-- cat_hospital_up.bill_table definition
+
+CREATE TABLE `bill_table` (
+  `bill_id` int NOT NULL AUTO_INCREMENT,
+  `usage` int NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sell_price` double NOT NULL,
+  `record_id` int NOT NULL,
+  PRIMARY KEY (`bill_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.cats_table definition
+
+CREATE TABLE `cats_table` (
+  `cat_id` int NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cat_owner` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phone_number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `birthday` bigint NOT NULL,
+  `key` bigint NOT NULL,
+  `sex` int NOT NULL,
+  `sterilize` int NOT NULL,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.inStocks_table definition
+
+CREATE TABLE `inStocks_table` (
+  `in_stock_id` int NOT NULL AUTO_INCREMENT,
+  `type` int NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `key` bigint NOT NULL,
+  `consumed` int NOT NULL,
+  `sell_price` double NOT NULL,
+  `brand` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `amount` int DEFAULT NULL,
+  PRIMARY KEY (`in_stock_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.inbound_table definition
+
+CREATE TABLE `inbound_table` (
+  `inbound_id` int NOT NULL AUTO_INCREMENT,
+  `key` bigint NOT NULL,
+  `amount` int NOT NULL,
+  `batch_number` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `staff` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `purchase_price` double NOT NULL,
+  `in_stock_id` int NOT NULL,
+  PRIMARY KEY (`inbound_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.permission_table definition
+
+CREATE TABLE `permission_table` (
+  `permission_id` int NOT NULL AUTO_INCREMENT,
+  `permission_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `permission_column` int NOT NULL DEFAULT '0',
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`permission_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.records_table definition
+
+CREATE TABLE `records_table` (
+  `record_id` int NOT NULL AUTO_INCREMENT,
+  `cat_id` int NOT NULL,
+  `key` bigint NOT NULL,
+  `staff_id` int NOT NULL,
+  `weight` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `diagnosis` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `reserve` int NOT NULL DEFAULT '0',
+  `bill_status` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`record_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.role_permission definition
+
+CREATE TABLE `role_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `permission_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.roles_table definition
+
+CREATE TABLE `roles_table` (
+  `role_id` int NOT NULL AUTO_INCREMENT,
+  `katagaki` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `role_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.showed_staff definition
+
+CREATE TABLE `showed_staff` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `staff_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.staff_role definition
+
+CREATE TABLE `staff_role` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role_id` int NOT NULL,
+  `staff_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.staff_table definition
+
+CREATE TABLE `staff_table` (
+  `staff_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `real_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `key` bigint NOT NULL,
+  `intro` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `zaishoku` int NOT NULL,
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`staff_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.treatment_table definition
+
+CREATE TABLE `treatment_table` (
+  `treatment_id` int NOT NULL AUTO_INCREMENT,
+  `record_id` int NOT NULL,
+  `in_stock_id` int NOT NULL,
+  `usage` int NOT NULL DEFAULT '0',
+  `done` tinyint(1) NOT NULL,
+  PRIMARY KEY (`treatment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.vaccine_table definition
+
+CREATE TABLE `vaccine_table` (
+  `vaccine_id` int NOT NULL AUTO_INCREMENT,
+  `cat_id` int NOT NULL,
+  `date` bigint NOT NULL,
+  PRIMARY KEY (`vaccine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- cat_hospital_up.vermifuge_table definition
+
+CREATE TABLE `vermifuge_table` (
+  `vermifuge_id` int NOT NULL AUTO_INCREMENT,
+  `cat_id` int NOT NULL,
+  `date` bigint NOT NULL,
+  PRIMARY KEY (`vermifuge_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO cat_hospital_up.bill_table (`usage`,name,sell_price,record_id) VALUES
 	 (1,'洁牙',270.0,10),
 	 (1,'注射麻醉',170.0,10),
