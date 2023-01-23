@@ -179,7 +179,7 @@ INSERT INTO cat_hospital_up.cats_table (nickname,cat_owner,phone_number,birthday
 	 ('猫咪3','客人3','13787654323',1502371531282,1661261153936,1,0);
 INSERT INTO cat_hospital_up.inStocks_table (`type`,name,`key`,consumed,sell_price,brand,amount) VALUES
 	 (0,'呼吸麻醉',1643644261100,21,122.0,NULL,NULL),
-	 (1,'妙三多',1643644261010,102,175.0,'Pfizer',109),
+	 (1,'妙三多',1643644261010,102,175.0,'Pfizer',10),
 	 (1,'大宠爱',1673607477274,0,84.0,'Zoetis',10),
 	 (0,'缝合',1673612914187,0,20.0,NULL,NULL);
 INSERT INTO cat_hospital_up.inbound_table (`key`,amount,batch_number,staff,purchase_price,in_stock_id) VALUES
